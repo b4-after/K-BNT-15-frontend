@@ -235,7 +235,10 @@
                     let formData = new FormData();
                     let blob = new Blob(chunks, { type: "audio/mp3" });
 
-                    
+
+                    // memberId의 경우 메인 홈페이지에서 사용자가 온보딩 과정을 거쳤을 때,
+                    // 다시 말해 나이를 선택하고 실제 여기 테스트 페이지로 넘어 왔을 때,
+                    // localStorage에 저장되어 있는 상황
                     formData.append("memberId", "여기 멤버 아이디 받아서 들어와야 함")
                     formData.append("questionId", "여기 질문 아이디 들어와야 함")
                     formData.append("audio", blob);
