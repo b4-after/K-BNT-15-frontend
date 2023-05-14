@@ -80,8 +80,10 @@
             1. 동적 요소: 15개의 <div class="time_blck">.
             2. 관련 함수 및 변수: 
                 blocks - 아래의 time_blck 들을 querySelectorAll 로 가져온 변수
-                startTransition() - blocks, intervalId, index
-            모호하지만 페이지에서 bar 처럼 생긴 것 얘 밖에 없어서 무관할 거라 생각. 
+                startTransition() - blocks, intervalId, index. 
+                intervalId 에 setInterval() 이 달리며, index 가 blocks 의 길이보다 짧다면 (15 미만이면)
+                index 번째의 time_blck 의 배경을 흰색으로 변환. 그리고 index 를 1 증가시킴.
+                resetBar() - 
         -->
         <div id="bar">
             <div class="time_blck"></div>
