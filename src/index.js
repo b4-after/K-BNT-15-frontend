@@ -25,7 +25,7 @@ document.getElementById("start-button").addEventListener("click", function(event
   }
     
     // 서버에 요청하기
-    fetch("api_url_here", {
+    fetch("https://api.bnt-15.kr/mebmers/", {
       method: "POST",
       body: JSON.stringify({
         age: selectedAge
