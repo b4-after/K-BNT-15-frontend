@@ -232,13 +232,17 @@
                     // 노션에 작성된 명세서를 볼 경우, blob 데이터만 보내면 안 되고 여러 데이터를 같이 보내줘야 함
 
                     // create a new blob from the audio chunks
+                    let formData = new FormData();
                     let blob = new Blob(chunks, { type: "audio/mp3" });
+
+                    
+                    formData.append("memberId", "여기 멤버 아이디 받아서 들어와야 함")
+                    formData.append("questionId", "여기 질문 아이디 들어와야 함")
+                    formData.append("audio", blob);
+
                     fetch("https://api.bnt-15.kr/answers", {
                         method: "POST",
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: blob,                        
+                        body: formData                        
                     })
                     // create a download link for the audio file
                     // let url = URL.createObjectURL(blob);
