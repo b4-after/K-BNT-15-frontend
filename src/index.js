@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
       
-    window.location.href = "https://bnt-15.kr/test.html";
+    window.location.href = "test.html";
       // 서버에 요청하기
       // fetch("https://api.bnt-15.kr/mebmers", {
       //   method: "POST",
