@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<!-- 
+    이름: <head>
+    1. 동적 요소: css
+    2. 관련 함수: 파악 불가. 상세 이유 아래.
+    3째, 4째의 http_equiv 와 viewport 의미 모름.
+-->
+
+<head>
+    <title>testPage_ver1</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./test.css">
+</head>
+
+<body>
+    <!--
+        이름: <div class="gray-box">
+        1. 동적 요소: x
+        2. 관련 함수: x
+        전체 컨테이너와 무관한 회색 상자.
+        flex-box, align-item 등 모르는 내용을 챗gpt 가 사용. 추후 수정에 차질 가능.
+    -->
+    <div class="gray-box">
+        <div class="green-box">
+            <h2 class="green-text">이 사물의 이름을 말해주세요</h2>
+        </div>
+    </div>
+
+    <!--
+        이름: <div class="container">
+        1. 동적 요소: 많음
+        2. 관련 함수: 많음
+        핵심 컨테이너.
+        여기도 flex-box 가 적용. 추후 수정 차질 가능
+    -->
+    <div class="container">
+
+        <!--
+            이름: <div id="prgrs_div">
+            1. 동적 요소: prgrs_num_ui
+            2. 관련 함수 및 변수: question_ID, 다음 버튼(id='next')의 eventListener 
+            진행도에 따라 <span id='prgrs_num_ui'> 가 script 에서 question_ID, 다음 버튼의 이벤트 리스너와 연동해 증가합니다.
+        -->
+        <div id="prgrs_div">
+            <p>현재 진행도는</p>
+            <p><span id="prgrs_num_ui">1</span><span>/15</span></p>
+            <p>입니다</p>
+        </div>
+        <!--
+            이름: <img id="image">
+            1. 동적 요소: 이 img 의 src
+            2. 관련 함수 및 변수: 
+                img_update() : 진행도 별 img 링크 switch 로 변경
+                img_hide(): 다음 문제 입력 후, img 를 물음표 사진으로 변경해 '숨기는' 것과 동일한 역할을 하게 만드는 것
+            초기에는 img_hide() 에 이용되는 물음표 사진으로 시작합니다.
+            이후 시작 버튼 입력 시 각 진행도에 나와야 할 사진이 img_update() 로 변경됩니다.
+            다음 문제 '이동' 시 사진이 img_hide()를 통해 다시 물음표 사진으로 돌아갑니다.
+        -->
+        <img id="image" src="https://cdn-icons-png.flaticon.com/512/2732/2732700.png" alt="Placeholder image" />
+
+        <!--
+            이름: <div id="timer">
+            1. 동적 요소: <span id="countdown">
+            2. 관련 함수 및 변수: countdownIntervalId, remainingTime startCountdown(), stopCountdown(), resetCountdown()
+                녹음 시작 시 startCountdown() 발생, countdownIntervalId 를 setInterval 등록 뒤, remainingTime 을 1초당 1씩 감소시키며 
+                이를 <span id="countdown"> 의 innerHTML 로 변경시켜 남은 시간을 나타냅니다. 
+                녹음 종료가 되면 stopCountdown() 발생, countdownIntervalId 를 clearInterval 시킵니다.
+                다음 문제로 이동 시 resetCountdown() 발생, remainingTime 을 15로 초기화 후 이를 <span id="countdown"> innerHTML 에도 적용합니다.
+        -->
+        <div id="timer">
+            <p><span>남은 시간:</span><span id="countdown">15</span><span>초</span></p>
+        </div>
+
+        <!--
+            이름: <div id="bar">. 
+            1. 동적 요소: 15개의 <div class="time_blck">.
+            2. 관련 함수 및 변수: 
+                blocks - 아래의 time_blck 들을 querySelectorAll 로 가져온 변수
+                startTransition() - blocks, intervalId, index. 
+                intervalId 에 setInterval() 이 달리며, index 가 blocks 의 길이보다 짧다면 (15 미만이면)
+                index 번째의 time_blck 의 배경을 흰색으로 변환. 그리고 index 를 1 증가시킴.
+                resetBar() - 
+        -->
+        <div id="bar">
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+            <div class="time_blck"></div>
+        </div>
+
+        <div class="button-container">
+            <button class="button" id="record">녹음 시작</button>
+            <button class="button" id="stop">녹음 종료</button>
+            <button class="button" id="next">다음 문제로</button>
+        </div>
+
+    </div>
+
+    <script>
+        const blocks = document.querySelectorAll('.time_blck'); // 타이머 쪽 변수
+        const countdown = document.getElementById('countdown'); // 카운트다운 변수
+        let index = 0; // 타이머 쪽 변수
+        let intervalId; // 타이머 쪽 변수
+        let countdownIntervalId; // 카운트다운 변수
+        let remainingTime = 15; // 카운트다운 변수
+        const image = document.getElementById('image');
+        const prgrs_num_ui = document.getElementById('prgrs_num_ui');
+
+        /* !!!!!!!!!!!
+        이름: question_ID
+
+        !!!!!!!!!!!!! */
+        let question_ID = 1;
+
+        // 시간 막대, id=bar 의 class=time_blck 들의 transition 시작. 페이지 로드 시 자동 시작.
+        function startTransition() {
+            intervalId = setInterval(() => {
+                if (index < blocks.length) {
+                    blocks[index].style.backgroundColor = 'white';
+                    index++;
+                }
+            }, 1000);
+        }
+
+        // 다음 문제, id=next 누르면 시간 막대, id=bar 의  transition 초기화
+        function resetBar() {
+            index = 0;
+            clearInterval(intervalId);
+            for (let i = 0; i < blocks.length; i++) {
+                blocks[i].style.backgroundColor = 'orange';
+            }
+        }
+
+        function startCountdown() {
+            countdownIntervalId = setInterval(() => {
+                if (remainingTime > 0) {
+                    remainingTime--;
+                    countdown.innerHTML = remainingTime.toString();
+                }
+            }, 1000);
+        }
+
+        function stopCountdown() {
+            clearInterval(countdownIntervalId);
+        }
+
+        function resetCountdown() {
+            remainingTime = 15;
+            countdown.innerHTML = remainingTime.toString();
+        }
+
+        function img_update() {
+            fetch(`https://api.bnt-15.kr/questions/${question_ID}`, {
+                method: "GEt"
+            })
+            .then(response => response.json())
+            .then(data => {
+                image.src = data.image_url;
+            })
+            // switch (question_ID) {
+            //     case 1:
+            //         image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Bucephala-albeola-010.jpg/440px-Bucephala-albeola-010.jpg";
+            //         break;
+            //     case 2:
+            //         image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Pacific_Black_Ducks_on_pond_ducking.jpg/440px-Pacific_Black_Ducks_on_pond_ducking.jpg";
+            //         break;
+            //     case 3:
+            //         image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Mallard_drake_.02.jpg/440px-Mallard_drake_.02.jpg";
+            //         break;
+            // }
+        }
+
+        function img_hide() {
+            image.src = "https://cdn-icons-png.flaticon.com/512/2732/2732700.png"
+        }
+
+        document.getElementById("record").addEventListener('click', () => {
+            img_update();
+            startTransition(); // 시간 막대
+            startCountdown(); // 카운트다운
+        });
+        document.getElementById("stop").addEventListener('click', () => {
+            // 사용자가 멈춤할 경우, 그 결과를 서버에 전달해준다.
+            clearInterval(intervalId);
+            stopCountdown();
+        });
+        document.getElementById('next').addEventListener('click', () => {
+            // 하나의 문제가 끝난 것이기 때문에, 그 결과를 서버에 전달해준다.
+            // 여기서 Blob 객체 > 서버에 전달
+            resetBar();
+            resetCountdown();
+            question_ID = question_ID + 1;
+            prgrs_num_ui.innerHTML = question_ID;
+            img_hide();
+        });
+
+        // get audio stream from user's device
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function (stream) {
+                // create a new MediaRecorder object
+                let recorder = new MediaRecorder(stream);
+                let chunks = [];
+
+                // start recording when the "Start Recording" button is clicked
+                document.querySelector("#record").addEventListener("click", function () {
+                    recorder.start();
+                });
+
+                // stop recording and download the audio file when the "Stop Recording" button is clicked
+                document.querySelector("#stop").addEventListener("click", function () {
+                    recorder.stop();
+                });
+
+                recorder.addEventListener("stop", function () {
+                    // 레코딩이 끝난 음원 객체인 Blob 객체를 서버로 전달
+                    // MultiPart FormData를 Fetch를 사용해서 보내야 하는 점에 유의
+                    // 노션에 작성된 명세서를 볼 경우, blob 데이터만 보내면 안 되고 여러 데이터를 같이 보내줘야 함
+
+                    // create a new blob from the audio chunks
+                    let blob = new Blob(chunks, { type: "audio/mp3" });
+                    fetch("https://api.bnt-15.kr/answers", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: blob,                        
+                    })
+                    // create a download link for the audio file
+                    // let url = URL.createObjectURL(blob);
+                    // let a = document.createElement("a");
+                    // document.body.appendChild(a);
+                    // a.style = "display: none";
+                    // a.href = url;
+                    // a.download = "recorded_audio.mp3";
+                    // a.click();
+                    // release the object URL resources
+                    // URL.revokeObjectURL(url);
+                });
+
+                // push new audio data to the chunks array as it becomes available
+                recorder.ondataavailable = function (event) {
+                    chunks.push(event.data);
+                };
+
+                // log any errors that occur while recording
+                recorder.onerror = function (event) {
+                    console.error("Recorder error:", event.error);
+                };
+            })
+            .catch(function (err) {
+                console.error("MediaDevices getUserMedia error:", err);
+            });
+
+    </script>
+
+</body>
+
+</html>

@@ -37,7 +37,7 @@ document.getElementById("start-button").addEventListener("click", function(event
       localStorage.setItem("members_id", data.members_id);
       
       // 다음 페이지(검사페이지)로 이동하기
-      window.location.href = "next_page_url_here";
+      window.location.href = "";
     })
     .catch(error => console.error(error));
   });
