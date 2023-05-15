@@ -1,0 +1,88 @@
+/* .big-box 안에 .green-box 추가 */
+
+.gray-box {
+    color: black;
+    font-size: 20px;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* h1, .green-box를 가운데로 정렬 */
+  }
+
+  /* 초록색 상자 */
+  .green-box {
+    width: fit-content; /* green-box의 width를 글자 크기에 맞게 설정 */
+    margin-top: -20px;
+  }
+  
+  .green-box h2 {
+    color: white;
+    font-size: 18px;
+    display: inline-block;
+    background-color: green;
+    padding: 15px;
+  }
+
+  .beige-box {
+    align-items: center;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 15px;
+    margin-bottom: -35px;
+  }
+  .beige-box h3 {
+    background-color: rgba(234, 230, 221);
+    display: inline-block;
+    font-size: 18px;
+    padding: 20px;    
+  }
+  
+.container {
+	margin-top: 100px;
+	display: flex;
+	margin-left : 100px;
+
+}
+
+table{
+
+	border-collapse : collapse;
+	text-align : center;
+	width : 43%;
+	margin-left : 25px;
+	font-size : 25px;
+	font-weight : bold;
+}
+.table{
+	display : flex;
+	width : 60%;
+	
+}
+
+h2{
+	display: inline-block;
+}
+h3{
+	display: inline-block;
+}
+h4{
+	display: inline-block;
+}
+.result{
+	display: inline-block;
+	text-align : center;
+	margin-left: 25px;
+	font-size : 20px;
+}
+.highlight {
+	color: red;
+}
+.table{
+	font-size : 19px;
+	text-align : center;
+}
+th{
+	background : green;
+	color : white;
+}
+
