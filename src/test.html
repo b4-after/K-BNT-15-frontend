@@ -268,7 +268,7 @@
                     formData.append("questionId", "여기 질문 아이디 들어와야 함")
                     formData.append("audio", blob);
 
-                    fetch("https://api.bnt-15.kr/answers", {
+                    fetch('http://15.164.169.174:8080/answers', {
                         method: "POST",
                         body: formData
                     })
