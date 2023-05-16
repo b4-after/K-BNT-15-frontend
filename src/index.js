@@ -26,23 +26,33 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
       
-    window.location.href = "test.html";
-      // 서버에 요청하기
-      // fetch("https://api.bnt-15.kr/mebmers", {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     age: selectedAge
-      //   })
-      // })
-      // .then(response => response.json())
-      // .then(data => {
-      //   // members 식별자 localstorage에 저장하기
-      //   localStorage.setItem("members_id", data.members_id);
-        
-      //   // 다음 페이지(검사페이지)로 이동하기
-      //   window.location.href = "https://bnt-15.kr/test";
-      // })
-      // .catch(error => console.error(error));
-    });
-    
-})
+    //window.location.href = "test.html";
+    // 서버에 요청하기
+    fetch("http://15.164.169.174:8080/members", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        age: selectedAge
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        const locationHeader = response.headers.get("Location");
+        console.log(locationHeader);
+        if (locationHeader) {
+          const membersId = locationHeader.split("/").pop();
+          localStorage.setItem("members_id", membersId);
+          // test 페이지로 전환
+          window.location.href = "https://bnt-15.kr/test";
+        } else {
+          throw new Error("Location header not found");
+        }
+      } else {
+        throw new Error("HTTP error " + response.status);
+      }
+    })
+    .catch(error => console.error(error));
+  });
+});
