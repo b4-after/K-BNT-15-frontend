@@ -167,7 +167,7 @@
 
         function img_update() {
             fetch(`https://api.bnt-15.kr/questions/${question_ID}`, {
-                method: "GEt"
+                method: "GET"
             })
                 .then(response => response.json())
                 .then(data => {
