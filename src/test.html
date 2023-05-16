@@ -173,17 +173,6 @@
                 .then(data => {
                     image.src = data.imageUrl;
                 })
-            // switch (question_ID) {
-            //     case 1:
-            //         image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Bucephala-albeola-010.jpg/440px-Bucephala-albeola-010.jpg";
-            //         break;
-            //     case 2:
-            //         image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Pacific_Black_Ducks_on_pond_ducking.jpg/440px-Pacific_Black_Ducks_on_pond_ducking.jpg";
-            //         break;
-            //     case 3:
-            //         image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Mallard_drake_.02.jpg/440px-Mallard_drake_.02.jpg";
-            //         break;
-            // }
         }
 
         function img_hide() {
@@ -205,6 +194,9 @@
 
         }
 
+
+
+
         document.getElementById("start").addEventListener('click', () => {
             turn_off('start');
 
@@ -215,13 +207,11 @@
             turn_on('next');
         });
         document.getElementById("next").addEventListener('click', () => {
-            // 사용자가 멈춤할 경우, 그 결과를 서버에 전달해준다.
             turn_off('next');
 
             clearInterval(intervalId);
             stopCountdown();
-            // 하나의 문제가 끝난 것이기 때문에, 그 결과를 서버에 전달해준다.
-            // 여기서 Blob 객체 > 서버에 전달
+
             resetBar();
             resetCountdown();
             question_ID = question_ID + 1;
@@ -230,78 +220,131 @@
 
             turn_on('start');
         });
-        // document.getElementById('next').addEventListener('click', () => {
-
-        // });
 
         // get audio stream from user's device
+        let mediaRecorder;
+        let chunks = [];
+
+        // Request permission to access the microphone
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(function (stream) {
-                console.log("Even though permit ain't pop up, Record starts.")
-                // create a new MediaRecorder object
-                let recorder = new MediaRecorder(stream);
-                let chunks = [];
-
-                // start recording when the "Start Recording" button is clicked
-                document.querySelector("#start").addEventListener("click", function () {
-                    recorder.start();
-                });
-
-                // stop recording and download the audio file when the "다음 문제로" button is clicked
-                document.querySelector("#next").addEventListener("click", function () {
-                    recorder.stop();
-                });
-
-                recorder.addEventListener("stop", function () {
-                    // 레코딩이 끝난 음원 객체인 Blob 객체를 서버로 전달
-                    // MultiPart FormData를 Fetch를 사용해서 보내야 하는 점에 유의
-                    // 노션에 작성된 명세서를 볼 경우, blob 데이터만 보내면 안 되고 여러 데이터를 같이 보내줘야 함
-
-                    // create a new blob from the audio chunks
-                    let formData = new FormData();
-                    let blob = new Blob(chunks, { type: "audio.mp3" });
-
-
-                    // memberId의 경우 메인 홈페이지에서 사용자가 온보딩 과정을 거쳤을 때,
-                    // 다시 말해 나이를 선택하고 실제 여기 테스트 페이지로 넘어 왔을 때,
-                    // localStorage에 저장되어 있는 상황
-
-                    formData.append("memberId", 1) // 어쩔 수 없이 하드 코딩?
-                    formData.append("questionId", question_ID - 1)
-                    formData.append("audio", blob);
-
-                    fetch('http://15.164.169.174:8080/answers', {
-                        method: "POST",
-                        body: formData
-                    })
-                    // create a download link for the audio file
-                    // let url = URL.createObjectURL(blob);
-                    // let a = document.createElement("a");
-                    // document.body.appendChild(a);
-                    // a.style = "display: none";
-                    // a.href = url;
-                    // a.download = "recorded_audio.mp3";
-                    // a.click();
-                    // release the object URL resources
-                    // URL.revokeObjectURL(url);
-                });
-
-                // push new audio data to the chunks array as it becomes available
-                recorder.ondataavailable = function (event) {
+                // Create the MediaRecorder object
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.addEventListener('dataavailable', function (event) {
                     chunks.push(event.data);
-                };
+                });
+                // Listen for data available event and collect recorded chunks
 
-                // log any errors that occur while recording
-                recorder.onerror = function (event) {
-                    console.error("Recorder error:", event.error);
-                };
             })
-            .catch(function (err) {
-                console.error("MediaDevices getUserMedia error:", err);
+            .catch(function (error) {
+                console.error('Error accessing microphone:', error);
             });
 
+        // Start recording
+        document.getElementById('start').addEventListener('click', function () {
+            chunks = [];
+            mediaRecorder.start();
+            console.log('Recording started');
+        });
+
+        // Stop recording and send the audio to the server
+        document.getElementById('next').addEventListener('click', function () {
+            mediaRecorder.stop();
+            console.log('Recording stopped');
+
+            // Create a new Blob with the recorded chunks
+            let blob = new Blob(chunks, { type: 'audio/mpeg-3' });
+
+            // Create a FormData object to send the audio file
+            let formData = new FormData();
+            formData.append("memberId", 1); // 어쩔 수 없이 하드 코딩?
+            formData.append("questionId", question_ID - 1);
+            formData.append("audio", blob);
+
+            // Send the audio file to the server using Fetch API
+            fetch('http://15.164.169.174:8080/answers', {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (response) {
+                    console.log('Audio sent successfully');
+                })
+                .catch(function (error) {
+                    console.error('Error sending audio:', error);
+                });
+        });
+        // navigator.mediaDevices.getUserMedia({ audio: true })
+        //     .then(function (stream) {
+        //         console.log("Even though permit ain't pop up, Record starts.")
+        //         // create a new MediaRecorder object
+        //         let recorder = new MediaRecorder(stream);
+        //         console.log("recorder 정의", question_ID);
+        //         let chunks = [];
+
+        //         // start recording when the "Start Recording" button is clicked
+        //         document.querySelector("#start").addEventListener("click", function () {
+        //             recorder.start();
+        //             console.log("recorder 시작", question_ID);
+        //         });
+
+        //         // stop recording and download the audio file when the "다음 문제로" button is clicked
+        //         document.querySelector("#next").addEventListener("click", function () {
+        //             recorder.stop();
+        //             console.log("recorder 종료", question_ID);
+        //         });
+
+        //         recorder.addEventListener("stop", function () {
+        //             // 레코딩이 끝난 음원 객체인 Blob 객체를 서버로 전달
+        //             // MultiPart FormData를 Fetch를 사용해서 보내야 하는 점에 유의
+        //             // 노션에 작성된 명세서를 볼 경우, blob 데이터만 보내면 안 되고 여러 데이터를 같이 보내줘야 함
+
+        //             // create a new blob from the audio chunks
+        //             let formData = new FormData();
+        //             let blob = new Blob(chunks, { type: "audio/mp3" });
+        //             console.log("blob 생성", question_ID);
+
+
+        //             // memberId의 경우 메인 홈페이지에서 사용자가 온보딩 과정을 거쳤을 때,
+        //             // 다시 말해 나이를 선택하고 실제 여기 테스트 페이지로 넘어 왔을 때,
+        //             // localStorage에 저장되어 있는 상황
+
+        //             formData.append("memberId", 1); // 어쩔 수 없이 하드 코딩?
+        //             formData.append("questionId", question_ID - 1);
+        //             formData.append("audio", blob);
+
+        //             fetch('http://15.164.169.174:8080/answers', {
+        //                 method: "POST",
+        //                 body: formData
+
+        //             })
+        //             // create a download link for the audio file
+        //             let url = URL.createObjectURL(blob);
+        //             let a = document.createElement("a");
+        //             document.body.appendChild(a);
+        //             a.style = "display: none";
+        //             a.href = url;
+        //             a.download = "recorded_audio.mp3";
+        //             a.click();
+        //             // release the object URL resources
+        //             URL.revokeObjectURL(url);
+        //         });
+
+        //         // push new audio data to the chunks array as it becomes available
+        //         recorder.ondataavailable = function (event) {
+        //             chunks.push(event.data);
+        //         };
+
+        //         // log any errors that occur while recording
+        //         recorder.onerror = function (event) {
+        //             console.error("Recorder error:", event.error);
+        //         };
+        //     })
+        //     .catch(function (err) {
+        //         console.error("MediaDevices getUserMedia error:", err);
+        //     });
+
     </script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         window._mfq = window._mfq || [];
         (function () {
             var mf = document.createElement("script");
@@ -309,7 +352,7 @@
             mf.src = "//cdn.mouseflow.com/projects/230f2361-1c10-4667-b5b5-676ced86a260.js";
             document.getElementsByTagName("head")[0].appendChild(mf);
         })();
-    </script>
+    </script> -->
 </body>
 
 </html>
