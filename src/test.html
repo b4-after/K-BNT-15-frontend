@@ -42,7 +42,7 @@
         <!--
             이름: <div id="prgrs_div">
             1. 동적 요소: prgrs_num_ui
-            2. 관련 함수 및 변수: question_ID, 다음 버튼(id='next')의 eventListener 
+            2. 관련 함수 및 변수: question_ID, 다음 버튼(id='next')의 eventListener => 사라짐.
             진행도에 따라 <span id='prgrs_num_ui'> 가 script 에서 question_ID, 다음 버튼의 이벤트 리스너와 연동해 증가합니다.
         -->
         <div id="prgrs_div">
@@ -80,7 +80,8 @@
             1. 동적 요소: 15개의 <div class="time_blck">.
             2. 관련 함수 및 변수: 
                 blocks - 아래의 time_blck 들을 querySelectorAll 로 가져온 변수
-                startTransition() - blocks, intervalId, index. 
+                startTransition() - blocks, intervalId, index 
+                
                 intervalId 에 setInterval() 이 달리며, index 가 blocks 의 길이보다 짧다면 (15 미만이면)
                 index 번째의 time_blck 의 배경을 흰색으로 변환. 그리고 index 를 1 증가시킴.
                 resetBar() - 
@@ -104,9 +105,9 @@
         </div>
 
         <div class="button-container">
-            <button class="button" id="record">녹음 시작</button>
-            <button class="button" id="stop">녹음 종료</button>
-            <button class="button" id="next">다음 문제로</button>
+            <button class="button" id="start">검사 시작</button>
+            <button class="button" id="next" disabled>다음 문제</button>
+            <!-- <button class="button" id="next">다음 문제로</button> -->
         </div>
 
     </div>
@@ -118,12 +119,12 @@
         let intervalId; // 타이머 쪽 변수
         let countdownIntervalId; // 카운트다운 변수
         let remainingTime = 15; // 카운트다운 변수
-        const image = document.getElementById('image');
-        const prgrs_num_ui = document.getElementById('prgrs_num_ui');
+        const image = document.getElementById('image'); // 이미지 dom
+        const prgrs_num_ui = document.getElementById('prgrs_num_ui'); // 진행도 숫자 dom
 
         /* !!!!!!!!!!!
         이름: question_ID
-
+        중요 변수!
         !!!!!!!!!!!!! */
         let question_ID = 1;
 
@@ -168,10 +169,10 @@
             fetch(`https://api.bnt-15.kr/questions/${question_ID}`, {
                 method: "GEt"
             })
-            .then(response => response.json())
-            .then(data => {
-                image.src = data.image_url;
-            })
+                .then(response => response.json())
+                .then(data => {
+                    image.src = data.image_url;
+                })
             // switch (question_ID) {
             //     case 1:
             //         image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Bucephala-albeola-010.jpg/440px-Bucephala-albeola-010.jpg";
@@ -186,20 +187,39 @@
         }
 
         function img_hide() {
-            image.src = "https://cdn-icons-png.flaticon.com/512/2732/2732700.png"
+            image.src = "https://cdn-icons-png.flaticon.com/512/2732/2732700.png";
         }
 
-        document.getElementById("record").addEventListener('click', () => {
+        function turn_off(id) {
+            document.getElementById(id).disabled = true;
+            document.getElementById(id).style.backgroundColor = 'darkslategray';
+        }
+
+        function turn_on(id) {
+            document.getElementById(id).disabled = false;
+            if (id == 'start') {
+                document.getElementById(id).style.backgroundColor = 'green';
+            } else if (id == 'next') {
+                document.getElementById(id).style.backgroundColor = 'yellow';
+            }
+
+        }
+
+        document.getElementById("start").addEventListener('click', () => {
+            turn_off('start');
+
             img_update();
             startTransition(); // 시간 막대
             startCountdown(); // 카운트다운
+
+            turn_on('next');
         });
-        document.getElementById("stop").addEventListener('click', () => {
+        document.getElementById("next").addEventListener('click', () => {
             // 사용자가 멈춤할 경우, 그 결과를 서버에 전달해준다.
+            turn_off('next');
+
             clearInterval(intervalId);
             stopCountdown();
-        });
-        document.getElementById('next').addEventListener('click', () => {
             // 하나의 문제가 끝난 것이기 때문에, 그 결과를 서버에 전달해준다.
             // 여기서 Blob 객체 > 서버에 전달
             resetBar();
@@ -207,7 +227,12 @@
             question_ID = question_ID + 1;
             prgrs_num_ui.innerHTML = question_ID;
             img_hide();
+
+            turn_on('start');
         });
+        // document.getElementById('next').addEventListener('click', () => {
+
+        // });
 
         // get audio stream from user's device
         navigator.mediaDevices.getUserMedia({ audio: true })
@@ -217,12 +242,12 @@
                 let chunks = [];
 
                 // start recording when the "Start Recording" button is clicked
-                document.querySelector("#record").addEventListener("click", function () {
+                document.querySelector("#start").addEventListener("click", function () {
                     recorder.start();
                 });
 
-                // stop recording and download the audio file when the "Stop Recording" button is clicked
-                document.querySelector("#stop").addEventListener("click", function () {
+                // stop recording and download the audio file when the "다음 문제로" button is clicked
+                document.querySelector("#next").addEventListener("click", function () {
                     recorder.stop();
                 });
 
@@ -245,7 +270,7 @@
 
                     fetch("https://api.bnt-15.kr/answers", {
                         method: "POST",
-                        body: formData                        
+                        body: formData
                     })
                     // create a download link for the audio file
                     // let url = URL.createObjectURL(blob);
@@ -276,13 +301,13 @@
     </script>
     <script type="text/javascript">
         window._mfq = window._mfq || [];
-        (function() {
-          var mf = document.createElement("script");
-          mf.type = "text/javascript"; mf.defer = true;
-          mf.src = "//cdn.mouseflow.com/projects/230f2361-1c10-4667-b5b5-676ced86a260.js";
-          document.getElementsByTagName("head")[0].appendChild(mf);
+        (function () {
+            var mf = document.createElement("script");
+            mf.type = "text/javascript"; mf.defer = true;
+            mf.src = "//cdn.mouseflow.com/projects/230f2361-1c10-4667-b5b5-676ced86a260.js";
+            document.getElementsByTagName("head")[0].appendChild(mf);
         })();
-      </script>  
+    </script>
 </body>
 
 </html>
