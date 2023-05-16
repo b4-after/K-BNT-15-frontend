@@ -237,6 +237,7 @@
         // get audio stream from user's device
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(function (stream) {
+                console.log("Even though permit ain't pop up, Record starts.")
                 // create a new MediaRecorder object
                 let recorder = new MediaRecorder(stream);
                 let chunks = [];
@@ -258,7 +259,7 @@
 
                     // create a new blob from the audio chunks
                     let formData = new FormData();
-                    let blob = new Blob(chunks, { type: "audio/mp3" });
+                    let blob = new Blob(chunks, { type: "audio.mp3" });
 
 
                     // memberId의 경우 메인 홈페이지에서 사용자가 온보딩 과정을 거쳤을 때,
@@ -266,7 +267,7 @@
                     // localStorage에 저장되어 있는 상황
 
                     formData.append("memberId", 1) // 어쩔 수 없이 하드 코딩?
-                    formData.append("questionId", question_ID)
+                    formData.append("questionId", question_ID - 1)
                     formData.append("audio", blob);
 
                     fetch('http://15.164.169.174:8080/answers', {
