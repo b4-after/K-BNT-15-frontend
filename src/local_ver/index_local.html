@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="index_local.css"> <!--로컬 변경점-->
+</head>
+
+<body>
+    <div class="gray-box">
+        <h1>온라인 치매 검사</h1>
+        <div class="green-box">
+            <h2 class="green-text">한국판 보스턴 이름대기 검사 단축형(K-BNT-15)</h2>
+        </div>
+    </div>
+    <div class="beige-box">
+        <h3 class="beige-text">이름대기 능력을 간단하게 알아보는 검사입니다. 결과에 너무 의존하기 보다, 평균보다 점수가
+            낮을 경우 치매센터나 병원을 방문하여 상담 받으시기 바랍니다
+        </h3>
+    </div>
+    <div class="container">
+        <div class="left">
+            <div style="border-bottom: 2px solid black; margin-bottom: 20px;">
+                <h4>안내사항</h4>
+                <p>본 검사에서는 15개의 그림카드가 주어집니다.</p>
+                <p>검사 페이지로 넘어가면 물음표[?]로 그림이 숨겨져 있습니다.</p>
+                <p><strong>[검사 시작]</strong> 버튼을 누르면 그림이 보이고, 녹음이 시작됩니다.</p>
+                <p>이때 15초 타이머가 시작됩니다. 시간 내에 사물의 이름을 말해주세요.</p>
+                <p><strong>[다음 문제]</strong> 버튼을 누르면 녹음이 종료되고, 다음 문제로 넘어갈 수 있습니다.</p>
+            </div>
+            <p><strong>문항수 : 15문항</strong></p>
+            <p><strong>소요시간 : 약 5분</strong></p>
+        </div>
+        <div class="right">
+            <form>
+                <label for="age-select" id="age-plz">검사 대상: 55세-94세</label><br><br>
+                <select id="age-select" name="age">
+                    <option value="" disabled selected hidden>만 나이를 선택해 주세요</option>
+                </select><br><br>
+                <input type="submit" id="start-button" value="검사 시작">
+            </form>
+            <script src="index_local.js"></script> <!--로컬 변경점-->
+            <!-- <script type="text/javascript">
+      window._mfq = window._mfq || [];
+      (function() {
+        var mf = document.createElement("script");
+        mf.type = "text/javascript"; mf.defer = true;
+        mf.src = "//cdn.mouseflow.com/projects/230f2361-1c10-4667-b5b5-676ced86a260.js";
+        document.getElementsByTagName("head")[0].appendChild(mf);
+      })();
+    </script>     -->
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+.gray-box {
+    color: black;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* h1, .green-box를 가운데로 정렬 */
+}
+
+/* 초록색 상자 */
+.green-box {
+    width: fit-content;
+    /* green-box의 width를 글자 크기에 맞게 설정 */
+    margin-top: 0;
+}
+
+.green-box h2 {
+    color: white;
+    font-size: 30px;
+    display: inline-block;
+    background-color: green;
+    padding: 15px 60px 15px 60px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Set styles for the text */
+#prgrs_div {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    padding: 10px;
+}
+
+#prgrs_div p {
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Set styles for the timer */
+#timer {
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    padding: 10px;
+}
+
+#bar {
+    position: absolute;
+    top: 70%;
+    left: 5%;
+    padding: 10px;
+}
+
+/* Set styles for the image */
+#image {
+    position: absolute;
+    height: 500px;
+    width: 500px;
+    top: 25%;
+}
+
+/* Set styles for the buttons */
+.button {
+    position: absolute;
+    right: 7%;
+    width: 180px;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+
+    transition-duration: 0.3s;
+}
+
+.button:active {
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+#start {
+    top: 40%;
+    background-color: green;
+    color: white;
+}
+
+#next {
+    top: 70%;
+    background-color: darkslategray;
+    color: black;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px;
+}
+
+.time_blck {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    margin-left: -5px;
+    border: 2px solid black;
+    background-color: orange;
+    transition: background-color 1s linear;
+}

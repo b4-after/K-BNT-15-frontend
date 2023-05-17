@@ -1,0 +1,95 @@
+.gray-box {
+    color: black;
+    font-size: 20px;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* h1, .green-box를 가운데로 정렬 */
+}
+
+/* 초록색 상자 */
+.green-box {
+    width: fit-content;
+    /* green-box의 width를 글자 크기에 맞게 설정 */
+    margin-top: -20px;
+}
+
+.green-box h2 {
+    color: white;
+    font-size: 18px;
+    display: inline-block;
+    background-color: green;
+    padding: 15px;
+}
+
+.beige-box {
+    align-items: center;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 15px;
+    margin-bottom: -35px;
+}
+
+.beige-box h3 {
+    background-color: rgba(234, 230, 221);
+    display: inline-block;
+    font-size: 18px;
+    padding: 20px;
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-left: 10%;
+    padding-right: 5%;
+}
+
+.left {
+    width: 80%;
+    border: 2px solid black;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.right {
+    padding-right: 20px;
+    padding-left: 100px;
+    padding-top: 100px;
+    width: 50%;
+}
+
+
+/* 나이 입력창과 버튼 */
+select {
+    display: block;
+    font-size: 18px;
+    padding: 10px;
+    width: 250px;
+    height: 50px;
+    margin-bottom: -20px;
+}
+
+#age-plz {
+    font-size: 18px;
+}
+
+#age-input,
+#start-button {
+    font-size: 18px;
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+    /* padding 크기 포함 */
+}
+
+#start-button {
+    font-weight: bold;
+    color: white;
+    background-color: green;
+    border-radius: 10px;
+    /* 모서리 둥글게 */
+}
