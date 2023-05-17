@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.log("memberID 를 받아옴. 이 경우 : ", membersId);
                         console.log("");
                         // test 페이지로 전환
-                        window.location.href = "testPage_local.html";
+                        window.location.href = "test_local.html";
                     } else {
                         throw new Error("Location header not found");
                     }
