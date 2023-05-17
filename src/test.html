@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./test.css">
+    <link rel="stylesheet" href="test.css">
 </head>
 
 <body>
@@ -42,7 +42,7 @@
         <!--
             이름: <div id="prgrs_div">
             1. 동적 요소: prgrs_num_ui
-            2. 관련 함수 및 변수: question_ID, 다음 버튼(id='next')의 eventListener => 사라짐.
+            2. 관련 함수 및 변수: question_ID, 다음 버튼(id='next')의 eventListener => 사라짐. 
             진행도에 따라 <span id='prgrs_num_ui'> 가 script 에서 question_ID, 다음 버튼의 이벤트 리스너와 연동해 증가합니다.
         -->
         <div id="prgrs_div">
@@ -80,11 +80,11 @@
             1. 동적 요소: 15개의 <div class="time_blck">.
             2. 관련 함수 및 변수: 
                 blocks - 아래의 time_blck 들을 querySelectorAll 로 가져온 변수
-                startTransition() - blocks, intervalId, index 
-                
-                intervalId 에 setInterval() 이 달리며, index 가 blocks 의 길이보다 짧다면 (15 미만이면)
+                startTransition() - blocks, intervalId, index
+
+            intervalId 에 setInterval() 이 달리며, index 가 blocks 의 길이보다 짧다면 (15 미만이면)
                 index 번째의 time_blck 의 배경을 흰색으로 변환. 그리고 index 를 1 증가시킴.
-                resetBar() - 
+                resetBar() -  
         -->
         <div id="bar">
             <div class="time_blck"></div>
@@ -112,247 +112,8 @@
 
     </div>
 
-    <script>
-        const blocks = document.querySelectorAll('.time_blck'); // 타이머 쪽 변수
-        const countdown = document.getElementById('countdown'); // 카운트다운 변수
-        let index = 0; // 타이머 쪽 변수
-        let intervalId; // 타이머 쪽 변수
-        let countdownIntervalId; // 카운트다운 변수
-        let remainingTime = 15; // 카운트다운 변수
-        const image = document.getElementById('image'); // 이미지 dom
-        const prgrs_num_ui = document.getElementById('prgrs_num_ui'); // 진행도 숫자 dom
+    <script src="test.js"></script>
 
-        /* !!!!!!!!!!!
-        이름: question_ID
-        중요 변수!
-        !!!!!!!!!!!!! */
-        let question_ID = 1;
-
-        // 시간 막대, id=bar 의 class=time_blck 들의 transition 시작. 페이지 로드 시 자동 시작.
-        function startTransition() {
-            intervalId = setInterval(() => {
-                if (index < blocks.length) {
-                    blocks[index].style.backgroundColor = 'white';
-                    index++;
-                }
-            }, 1000);
-        }
-
-        // 다음 문제, id=next 누르면 시간 막대, id=bar 의  transition 초기화
-        function resetBar() {
-            index = 0;
-            clearInterval(intervalId);
-            for (let i = 0; i < blocks.length; i++) {
-                blocks[i].style.backgroundColor = 'orange';
-            }
-        }
-
-        function startCountdown() {
-            countdownIntervalId = setInterval(() => {
-                if (remainingTime > 0) {
-                    remainingTime--;
-                    countdown.innerHTML = remainingTime.toString();
-                }
-            }, 1000);
-        }
-
-        function stopCountdown() {
-            clearInterval(countdownIntervalId);
-        }
-
-        function resetCountdown() {
-            remainingTime = 15;
-            countdown.innerHTML = remainingTime.toString();
-        }
-
-        function img_update() {
-            fetch(`http://15.164.169.174:8080/questions/${question_ID}`, {
-                method: "GET"
-            })
-                .then(response => response.json())
-                .then(data => {
-                    image.src = data.imageUrl;
-                })
-        }
-
-        function img_hide() {
-            image.src = "https://cdn-icons-png.flaticon.com/512/2732/2732700.png";
-        }
-
-        function turn_off(id) {
-            document.getElementById(id).disabled = true;
-            document.getElementById(id).style.backgroundColor = 'darkslategray';
-        }
-
-        function turn_on(id) {
-            document.getElementById(id).disabled = false;
-            if (id == 'start') {
-                document.getElementById(id).style.backgroundColor = 'green';
-            } else if (id == 'next') {
-                document.getElementById(id).style.backgroundColor = 'yellow';
-            }
-
-        }
-
-
-
-
-        document.getElementById("start").addEventListener('click', () => {
-            turn_off('start');
-
-            img_update();
-            startTransition(); // 시간 막대
-            startCountdown(); // 카운트다운
-
-            turn_on('next');
-        });
-        document.getElementById("next").addEventListener('click', () => {
-            turn_off('next');
-
-            clearInterval(intervalId);
-            stopCountdown();
-
-            resetBar();
-            resetCountdown();
-            question_ID = question_ID + 1;
-            prgrs_num_ui.innerHTML = question_ID;
-            img_hide();
-
-            turn_on('start');
-        });
-
-        // get audio stream from user's device
-        let mediaRecorder;
-        let chunks = [];
-
-        // Request permission to access the microphone
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(function (stream) {
-                // Create the MediaRecorder object
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.addEventListener('dataavailable', function (event) {
-                    chunks.push(event.data);
-                });
-                // Listen for data available event and collect recorded chunks
-
-            })
-            .catch(function (error) {
-                console.error('Error accessing microphone:', error);
-            });
-
-        // Start recording
-        document.getElementById('start').addEventListener('click', function () {
-            chunks = [];
-            mediaRecorder.start();
-            console.log('Recording started');
-        });
-
-        // Stop recording and send the audio to the server
-        document.getElementById('next').addEventListener('click', function () {
-            mediaRecorder.stop();
-            console.log('Recording stopped');
-
-            // Create a new Blob with the recorded chunks
-            let blob = new Blob(chunks, { type: 'audio/mpeg-3' });
-
-            // Create a FormData object to send the audio file
-            let formData = new FormData();
-            formData.append("memberId", 1); // 어쩔 수 없이 하드 코딩?
-            formData.append("questionId", question_ID - 1);
-            formData.append("audio", blob);
-
-            // Send the audio file to the server using Fetch API
-            fetch('http://15.164.169.174:8080/answers', {
-                method: 'POST',
-                body: formData
-            })
-                .then(function (response) {
-                    console.log('Audio sent successfully');
-                })
-                .catch(function (error) {
-                    console.error('Error sending audio:', error);
-                });
-        });
-        // navigator.mediaDevices.getUserMedia({ audio: true })
-        //     .then(function (stream) {
-        //         console.log("Even though permit ain't pop up, Record starts.")
-        //         // create a new MediaRecorder object
-        //         let recorder = new MediaRecorder(stream);
-        //         console.log("recorder 정의", question_ID);
-        //         let chunks = [];
-
-        //         // start recording when the "Start Recording" button is clicked
-        //         document.querySelector("#start").addEventListener("click", function () {
-        //             recorder.start();
-        //             console.log("recorder 시작", question_ID);
-        //         });
-
-        //         // stop recording and download the audio file when the "다음 문제로" button is clicked
-        //         document.querySelector("#next").addEventListener("click", function () {
-        //             recorder.stop();
-        //             console.log("recorder 종료", question_ID);
-        //         });
-
-        //         recorder.addEventListener("stop", function () {
-        //             // 레코딩이 끝난 음원 객체인 Blob 객체를 서버로 전달
-        //             // MultiPart FormData를 Fetch를 사용해서 보내야 하는 점에 유의
-        //             // 노션에 작성된 명세서를 볼 경우, blob 데이터만 보내면 안 되고 여러 데이터를 같이 보내줘야 함
-
-        //             // create a new blob from the audio chunks
-        //             let formData = new FormData();
-        //             let blob = new Blob(chunks, { type: "audio/mp3" });
-        //             console.log("blob 생성", question_ID);
-
-
-        //             // memberId의 경우 메인 홈페이지에서 사용자가 온보딩 과정을 거쳤을 때,
-        //             // 다시 말해 나이를 선택하고 실제 여기 테스트 페이지로 넘어 왔을 때,
-        //             // localStorage에 저장되어 있는 상황
-
-        //             formData.append("memberId", 1); // 어쩔 수 없이 하드 코딩?
-        //             formData.append("questionId", question_ID - 1);
-        //             formData.append("audio", blob);
-
-        //             fetch('http://15.164.169.174:8080/answers', {
-        //                 method: "POST",
-        //                 body: formData
-
-        //             })
-        //             // create a download link for the audio file
-        //             let url = URL.createObjectURL(blob);
-        //             let a = document.createElement("a");
-        //             document.body.appendChild(a);
-        //             a.style = "display: none";
-        //             a.href = url;
-        //             a.download = "recorded_audio.mp3";
-        //             a.click();
-        //             // release the object URL resources
-        //             URL.revokeObjectURL(url);
-        //         });
-
-        //         // push new audio data to the chunks array as it becomes available
-        //         recorder.ondataavailable = function (event) {
-        //             chunks.push(event.data);
-        //         };
-
-        //         // log any errors that occur while recording
-        //         recorder.onerror = function (event) {
-        //             console.error("Recorder error:", event.error);
-        //         };
-        //     })
-        //     .catch(function (err) {
-        //         console.error("MediaDevices getUserMedia error:", err);
-        //     });
-
-    </script>
-    <!-- <script type="text/javascript">
-        window._mfq = window._mfq || [];
-        (function () {
-            var mf = document.createElement("script");
-            mf.type = "text/javascript"; mf.defer = true;
-            mf.src = "//cdn.mouseflow.com/projects/230f2361-1c10-4667-b5b5-676ced86a260.js";
-            document.getElementsByTagName("head")[0].appendChild(mf);
-        })();
-    </script> -->
 </body>
 
 </html>
