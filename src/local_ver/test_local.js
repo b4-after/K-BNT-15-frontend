@@ -58,15 +58,15 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
         })
         console.log("question_ID : ", question_ID, "번째. 도메인으로 POST 가 진행된다.");
 
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = 'recorded_audio.mp3';
-        a.click();
-        console.log("question_ID : ", question_ID, "번째. 음성 다운로드가 진행된다. ");
+        // const url = URL.createObjectURL(blob);
+        // const a = document.createElement('a');
+        // document.body.appendChild(a);
+        // a.href = url;
+        // a.download = 'recorded_audio.mp3';
+        // a.click();
+        // console.log("question_ID : ", question_ID, "번째. 음성 다운로드가 진행된다. ");
 
-        URL.revokeObjectURL(url);
+        // URL.revokeObjectURL(url);
     };
 }
 
