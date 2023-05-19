@@ -74,6 +74,7 @@
     height: 150px;
     margin-bottom: -20px;
     font-weight: bold;
+    border: 3px solid blue;
   }
 
   #birthYear-plz{
