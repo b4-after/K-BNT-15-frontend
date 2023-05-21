@@ -1,7 +1,8 @@
 // GET 요청을 보내고 서버에서 응답 데이터를 처리하는 함수
 function getDataFromServer() {
     // 서버 URL을 설정합니다.
-    const serverURL = "http://15.164.169.174:8080/results/{meberID}"; // 실제 서버 URL로 변경해주세요.
+    const memberID = localStorage.getItem('members_id');
+    const serverURL = "http://15.164.169.174:8080/results/{memberID}"; // 실제 서버 URL로 변경해주세요.
 
     // GET 요청을 보냅니다.
     fetch(serverURL)
