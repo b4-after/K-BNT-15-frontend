@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
     alert(selectedAge);
 
     // 서버에 요청하기
-    window.location.href = "test.html";
+    //window.location.href = "testPage_local.html";
     fetch("http://15.164.169.174:8080/members", {
       method: "POST",
       headers: {
@@ -48,13 +48,17 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(response => {
       if (response.ok) {
+        console.log("나이 정보에 대해 fetch 와 POST 가 실행됨.");
+        console.log("");
         const locationHeader = response.headers.get("Location");
         console.log(locationHeader);
         if (locationHeader) {
           const membersId = locationHeader.split("/").pop();
           localStorage.setItem("members_id", membersId);
+          console.log("memberID 를 받아옴. 이 경우 : ", membersId);
+          console.log("");
           // test 페이지로 전환
-          window.location.href = "https://bnt-15.kr/test";
+          window.location.href = "test_local.html";
         } else {
           throw new Error("Location header not found");
         }
