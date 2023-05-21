@@ -33,8 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 출생연도로 만나이 계산  
     const selectedAge = currentYear-selectedBirthYear;
-    alert(selectedAge);
-
+ 
     // 서버에 요청하기
     //window.location.href = "testPage_local.html";
     fetch("http://15.164.169.174:8080/members", {
