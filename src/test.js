@@ -48,7 +48,7 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
         console.log("question_ID : ", question_ID, "번째. localstorage 에서 getItem 으로 memberID 가져옴");
         formData.append("memberId", local_mem_Id);
         formData.append("questionId", question_ID);
-        formData.append("audio", blob, "audio.mp3"));
+        formData.append("audio", blob, "audio.mp3");
         console.log("question_ID : ", question_ID, "번째. fetch 할 formdata 와 blob 이 생성된다.");
         console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
 
