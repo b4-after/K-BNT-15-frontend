@@ -40,7 +40,7 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
     turn_off('next');
 
     mediaRecorder.onstop = function () {
-        let blob = new Blob(chunks, { type: 'audio/mpeg' });
+        const blob = new Blob(chunks, { type: 'audio/mpeg' });
         chunks = [];
 
         let formData = new FormData();
@@ -48,7 +48,7 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
         console.log("question_ID : ", question_ID, "번째. localstorage 에서 getItem 으로 memberID 가져옴");
         formData.append("memberId", local_mem_Id); // 어쩔 수 없이 하드 코딩?
         formData.append("questionId", question_ID);
-        formData.append("audio", new Blob(blob, { type: "audio/mpeg" }));
+        formData.append("audio", blob, "audio.mp3");
         console.log("question_ID : ", question_ID, "번째. fetch 할 formdata 와 blob 이 생성된다.");
         console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
 
@@ -174,8 +174,11 @@ document.getElementById("next").addEventListener('click', () => {
     resetTransition();
     img_hide();
 
-    question_ID = question_ID + 1;
-    prgrs_num_ui.innerHTML = question_ID;
+    setTimeout(() => { //
+        question_ID = question_ID + 1;
+        prgrs_num_ui.innerHTML = question_ID;
+    }, 10);
+
 
     console.log("");
     console.log("==종료 end==", "question_ID : ", question_ID);
