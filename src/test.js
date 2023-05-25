@@ -119,7 +119,7 @@ function resetTransition() {
 
 function img_update() {
     console.log("question_ID : ", question_ID, "번째. 도메인 API 에서 사진을 받아와 img src 를 변경.");
-    fetch(`https://15.164.169.174:8080/questions/${question_ID}`, {
+    fetch(`http://15.164.169.174:8080/questions/${question_ID}`, {
         method: "GET"
     })
         .then(response => response.json())
