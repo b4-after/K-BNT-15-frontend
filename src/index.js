@@ -1,31 +1,39 @@
-/*나이 select box*/
+/*출생연도 select box
+만55세(1968년생)~만94세(1929년생) 
+만나이이지만 생일 무관 -1살*/
 
-document.addEventListener("DOMContentLoaded", function () {
-  const ageSelect = document.getElementById("age-select");
+document.addEventListener("DOMContentLoaded", function() {
+  const birthYearSelect = document.getElementById("birthYear-select");
+  
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  
+  const myL = currentYear - 94;
+  const myU = currentYear - 55;
 
-  for (let i = 55; i <= 94; i++) {
-    const option = {
-      value: i,
-      text: i + "세"
-    };
-    ageSelect.add(new Option(option.text, option.value));
+  for (let i = myU; i >= myL; i--) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.text = i;
+    birthYearSelect.add(new Option(option.text, option.value));
   }
 
-  /*버튼 클릭 시*/
-  document.getElementById("start-button").addEventListener("click", function (event) {
+    /*버튼 클릭 시*/
+  document.getElementById("start-button").addEventListener("click", function(event) {
     // 기본 이벤트 제거
     event.preventDefault();
+    
+    // 선택된 출생연도 가져오기
+    const selectedBirthYear = birthYearSelect.options[birthYearSelect.selectedIndex].value;
 
-    // 선택된 나이 가져오기
-    const ageSelect = document.getElementById("age-select");
-    const selectedAge = ageSelect.options[ageSelect.selectedIndex].value;
-
-    // 나이 선택 여부 확인
-    if (selectedAge === "") {
-      alert("만 나이를 선택해주세요.");
+    // 출생연도 선택 여부 확인
+    if (selectedBirthYear === "") {
       return;
     }
 
+    // 출생연도로 만나이 계산  
+    const selectedAge = currentYear-selectedBirthYear;
+   
     window.location.href = "test.html";
     // 서버에 요청하기
     fetch("http://15.164.169.174:8080/members", {
