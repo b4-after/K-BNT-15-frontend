@@ -40,15 +40,18 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
     turn_off('next');
 
     mediaRecorder.onstop = function () {
-        const blob = new Blob(chunks, { type: 'audio/mp3' });
+        let blob = new Blob(chunks, { type: 'audio/mpeg' });
         chunks = [];
 
         let formData = new FormData();
-
-        formData.append("memberId", 1); // 어쩔 수 없이 하드 코딩?
+        let local_mem_Id = JSON.parse(localStorage.getItem("members_id"));
+        console.log("question_ID : ", question_ID, "번째. localstorage 에서 getItem 으로 memberID 가져옴");
+        formData.append("memberId", local_mem_Id);
         formData.append("questionId", question_ID);
-        formData.append("audio", blob);
+        formData.append("audio", blob, "audio.mp3");
         console.log("question_ID : ", question_ID, "번째. fetch 할 formdata 와 blob 이 생성된다.");
+        console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
+
 
         fetch('http://15.164.169.174:8080/answers', {
             method: "POST",
@@ -90,12 +93,20 @@ function startTransition() {
             remainingTime--;
             countdown.innerHTML = remainingTime.toString();
         }
+        if (remainingTime == 0) {
+            countdown.innerHTML = '0';
+            setTimeout(() => { // 얘도 특성 상 위 코드보다 먼저 실행되서 강제 연장
+                document.getElementById("next").click();
+            }, 500);
+            setTimeout(() => { // alert 는 무조건 위의 2 문장 보다 먼저 실행되기에, 누구보다 느리게 실행되는 setTimeout 에 가둠
+                alert("아쉽지만 시간이 초과되어, 다음 문제로 이동했어요!");
+            }, 1000);
+        }
     }, 1000);
 }
 
 // 다음 문제, id=next 누르면 시간 막대, id=bar 의  transition 초기화
 function resetTransition() {
-    console.log("question_ID : ", question_ID, "번째. 타이머, 진행도, 등 초기화 및 IntervalID clear.");
     index = 0;
     clearInterval(intervalId);
     for (let i = 0; i < blocks.length; i++) {
@@ -103,11 +114,12 @@ function resetTransition() {
     }
     remainingTime = 15;
     countdown.innerHTML = remainingTime.toString();
+    console.log("question_ID : ", question_ID, "번째. 타이머, 진행도, 등 초기화 및 IntervalID clear.");
 }
 
 function img_update() {
     console.log("question_ID : ", question_ID, "번째. 도메인 API 에서 사진을 받아와 img src 를 변경.");
-    fetch(`http://15.164.169.174:8080/questions/${question_ID}`, {
+    fetch(`https://15.164.169.174:8080/questions/${question_ID}`, {
         method: "GET"
     })
         .then(response => response.json())

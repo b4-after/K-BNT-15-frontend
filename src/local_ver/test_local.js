@@ -40,17 +40,18 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
     turn_off('next');
 
     mediaRecorder.onstop = function () {
-        const blob = new Blob(chunks, { type: 'audio/mp3' });
+        const blob = new Blob(chunks, { type: 'audio/mpeg' });
         chunks = [];
 
         let formData = new FormData();
         let local_mem_Id = JSON.parse(localStorage.getItem("members_id"));
         console.log("question_ID : ", question_ID, "번째. localstorage 에서 getItem 으로 memberID 가져옴");
-        formData.append("memberId", local_mem_Id); // 어쩔 수 없이 하드 코딩?
+        formData.append("memberId", local_mem_Id);
         formData.append("questionId", question_ID);
-        formData.append("audio", blob);
+        formData.append("audio", blob, "audio.mp3");
         console.log("question_ID : ", question_ID, "번째. fetch 할 formdata 와 blob 이 생성된다.");
         console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
+
 
         fetch('http://15.164.169.174:8080/answers', {
             method: "POST",
@@ -58,15 +59,15 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
         })
         console.log("question_ID : ", question_ID, "번째. 도메인으로 POST 가 진행된다.");
 
-        // const url = URL.createObjectURL(blob);
-        // const a = document.createElement('a');
-        // document.body.appendChild(a);
-        // a.href = url;
-        // a.download = 'recorded_audio.mp3';
-        // a.click();
-        // console.log("question_ID : ", question_ID, "번째. 음성 다운로드가 진행된다. ");
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.href = url;
+        a.download = 'recorded_audio.mp3';
+        a.click();
+        console.log("question_ID : ", question_ID, "번째. 음성 다운로드가 진행된다. ");
 
-        // URL.revokeObjectURL(url);
+        URL.revokeObjectURL(url);
     };
 }
 
@@ -173,8 +174,11 @@ document.getElementById("next").addEventListener('click', () => {
     resetTransition();
     img_hide();
 
-    question_ID = question_ID + 1;
-    prgrs_num_ui.innerHTML = question_ID;
+    setTimeout(() => { //
+        question_ID = question_ID + 1;
+        prgrs_num_ui.innerHTML = question_ID;
+    }, 10);
+
 
     console.log("");
     console.log("==종료 end==", "question_ID : ", question_ID);

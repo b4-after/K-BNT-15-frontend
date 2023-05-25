@@ -1,0 +1,101 @@
+
+/* .gray-box 안에 .green-box 추가 */
+
+.gray-box {
+    color: black;
+    font-size: 20px;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* h1, .green-box를 가운데로 정렬 */
+  }
+
+  
+  .green-box h2 {
+    color: white;
+    font-size: 18px;
+    display: inline-block;
+    background-color: green;
+    padding: 15px;
+  }
+  
+  .beige-box {
+    align-items: center;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 15px;
+    margin-bottom: -35px;
+  }
+  .beige-box h3 {
+    background-color: rgba(234, 230, 221);
+    display: inline-block;
+    font-size: 18px;
+    padding: 20px;    
+  }
+
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-left: 10%;
+    padding-right: 5%;
+  }
+  
+  .left {
+    width: 80%;
+    border: 2px solid rgb(3, 3, 3);
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  .container img {
+    width: 37em; /* 이미지의 가로 너비 */
+    height: 23em;
+  }
+  
+  .right {
+    padding-right: 20px;
+    padding-left: 35px;
+    margin-top: 40px;
+    width: 50%;
+  }
+  
+
+  /* 출생연도 입력창과 버튼 */
+
+  select {
+    display: block;
+    font-size: 47px;
+    text-align: center;
+    padding: 10px;
+    width: 350px;
+    height: 150px;
+    margin-bottom: -20px;
+    font-weight: bold;
+    border: 3px solid blue;
+  }
+
+  #birthYear-plz{
+    font-size: 40px;
+    font-weight: bold;
+    padding-left: 75px;
+  }
+
+  #start-button {
+    font-size: 47px;
+    display: inline-block;
+    padding: 10px;
+    width: 350px;
+    height: 150px;
+    box-sizing: border-box; /* padding 크기 포함 */
+  }
+  
+  #start-button {
+    font-weight: bold;
+    color: white;
+    background-color: green;
+    border-radius: 10px; /* 모서리 둥글게 */
+  }
+  
