@@ -86,3 +86,8 @@ th{
 	color : white;
 }
 
+#form{
+  font-size: 40px;
+  font-weight: bold;
+  color: blue;
+}
