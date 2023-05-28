@@ -26,7 +26,7 @@ function getDataFromServer() {
             } else if (totalScore < averageScore) {
                 comparisonText = ' 평균 점수보다 낮습니다.';
             } else {
-                comparisonText = ' 평균 점수가 같습니다.';
+                comparisonText = ' 평균 점수입니다.';
             }
             document.getElementById('comparison').textContent = comparisonText;
 
