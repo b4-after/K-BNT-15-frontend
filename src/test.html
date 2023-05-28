@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-<!-- 
-    이름: <head>
-    1. 동적 요소: css
-    2. 관련 함수: 파악 불가. 상세 이유 아래.
-    3째, 4째의 http_equiv 와 viewport 의미 모름.
--->
 
 <head>
     <title>testPage_ver1</title>
@@ -17,100 +11,51 @@
 </head>
 
 <body>
-    <!--
-        이름: <div class="gray-box">
-        1. 동적 요소: x
-        2. 관련 함수: x
-        전체 컨테이너와 무관한 회색 상자.
-        flex-box, align-item 등 모르는 내용을 챗gpt 가 사용. 추후 수정에 차질 가능.
-    -->
+
     <div class="gray-box">
         <h1>온라인 치매 검사</h1>
     </div>
 
-    <!--
-        이름: <div class="container">
-        1. 동적 요소: 많음
-        2. 관련 함수: 많음
-        핵심 컨테이너.
-        여기도 flex-box 가 적용. 추후 수정 차질 가능
-    -->
     <div class="container">
+        <div class="center">
 
-        <!--
-            이름: <div id="prgrs_div">
-            1. 동적 요소: prgrs_num_ui
-            2. 관련 함수 및 변수: question_ID, 다음 버튼(id='next')의 eventListener => 사라짐. 
-            진행도에 따라 <span id='prgrs_num_ui'> 가 script 에서 question_ID, 다음 버튼의 이벤트 리스너와 연동해 증가합니다.
-        -->
-        <div id="prgrs_div">
-            <p>현재 진행도는</p>
-            <p><span id="prgrs_num_ui">1</span><span>/15</span></p>
-            <p>입니다</p>
+            <div id="timer">
+                <p><span>남은 시간:</span><span id="countdown">15</span><span>초</span></p>
+
+                <div id="bar">
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                    <div class="time_blck"></div>
+                </div>
+            </div>
+
+            <button class="button start-button" id="start">
+                <img id="button-image"
+                    src="https://drive.google.com/uc?export=view&id=1KuXVhv_HH9vqAinJ69C4lxEkXv6H8X9p" alt="클릭하고 말해주세요">
+            </button>
+
+            <div id="prgrs_div">
+                <p>현재 진행도는
+                    <span id="prgrs_num_ui">1</span><span>/15</span>
+                    입니다
+                </p>
+            </div>
         </div>
-        <!--
-            이름: <img id="image">
-            1. 동적 요소: 이 img 의 src
-            2. 관련 함수 및 변수: 
-                img_update() : 진행도 별 img 링크 switch 로 변경
-                img_hide(): 다음 문제 입력 후, img 를 물음표 사진으로 변경해 '숨기는' 것과 동일한 역할을 하게 만드는 것
-            초기에는 img_hide() 에 이용되는 물음표 사진으로 시작합니다.
-            이후 시작 버튼 입력 시 각 진행도에 나와야 할 사진이 img_update() 로 변경됩니다.
-            다음 문제 '이동' 시 사진이 img_hide()를 통해 다시 물음표 사진으로 돌아갑니다.
-        -->
-        <button id="start">
-            <img id="start_img" src="https://drive.google.com/uc?export=view&id=1KuXVhv_HH9vqAinJ69C4lxEkXv6H8X9p"
-                alt="클릭하고 말해주세요">
-        </button>
-
-        <!--
-            이름: <div id="timer">
-            1. 동적 요소: <span id="countdown">
-            2. 관련 함수 및 변수: countdownIntervalId, remainingTime startCountdown(), stopCountdown(), resetCountdown()
-                녹음 시작 시 startCountdown() 발생, countdownIntervalId 를 setInterval 등록 뒤, remainingTime 을 1초당 1씩 감소시키며 
-                이를 <span id="countdown"> 의 innerHTML 로 변경시켜 남은 시간을 나타냅니다. 
-                녹음 종료가 되면 stopCountdown() 발생, countdownIntervalId 를 clearInterval 시킵니다.
-                다음 문제로 이동 시 resetCountdown() 발생, remainingTime 을 15로 초기화 후 이를 <span id="countdown"> innerHTML 에도 적용합니다.
-        -->
-        <div id="timer">
-            <p><span>남은 시간:</span><span id="countdown">15</span><span>초</span></p>
+        <div class="right">
+            <button class="button next-button" id="next" disabled>다음 문제</button>
         </div>
-
-        <!--
-            이름: <div id="bar">. 
-            1. 동적 요소: 15개의 <div class="time_blck">.
-            2. 관련 함수 및 변수: 
-                blocks - 아래의 time_blck 들을 querySelectorAll 로 가져온 변수
-                startTransition() - blocks, intervalId, index
-
-            intervalId 에 setInterval() 이 달리며, index 가 blocks 의 길이보다 짧다면 (15 미만이면)
-                index 번째의 time_blck 의 배경을 흰색으로 변환. 그리고 index 를 1 증가시킴.
-                resetBar() -  
-        -->
-        <div id="bar">
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-            <div class="time_blck"></div>
-        </div>
-
-        <div class="button-container">
-
-            <button class="button" id="next" disabled>다음 문제</button>
-            <!-- <button class="button" id="next">다음 문제로</button> -->
-        </div>
-
     </div>
 
     <script src="test.js"></script>
