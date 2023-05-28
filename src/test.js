@@ -174,16 +174,20 @@ document.getElementById("next").addEventListener('click', () => {
     console.log("");
     console.log("question_ID : ", question_ID, "번째. next 버튼이 눌렸다.");
 
-    stopRecording();
-    resetTransition();
-    img_hide();
 
-    question_ID = question_ID + 1;
+
+
 
     if (question_ID > 15) {
         window.location.href = "result.html";
+    } else {
+        stopRecording();
+        resetTransition();
+        img_hide();
+        question_ID = question_ID + 1;
+        prgrs_num_ui.innerHTML = question_ID;
     }
-    prgrs_num_ui.innerHTML = question_ID;
+
 
     console.log("");
     console.log("==종료 end==", "question_ID : ", question_ID);
