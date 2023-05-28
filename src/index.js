@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 출생연도로 만나이 계산  
     const selectedAge = currentYear - selectedBirthYear;
 
-    window.location.href = "test.html";
+    //window.location.href = "test.html";
     // 서버에 요청하기
     fetch("https://api.bnt-15.kr/members", {
       method: "POST",
