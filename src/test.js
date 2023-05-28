@@ -63,7 +63,7 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.href = url;
-        a.download = 'recorded_audio.mp3';
+        a.download = 'recorded_audio.wav';
         a.click();
         console.log("question_ID : ", question_ID, "번째. 음성 다운로드가 진행된다. ");
 
