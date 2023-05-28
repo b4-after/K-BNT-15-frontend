@@ -75,6 +75,25 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
 
 // Ask for microphone permission when the page loads
 document.addEventListener('DOMContentLoaded', function () {
+    const types = [
+        "audio/wav",
+        "audio/mpeg",
+        "audio/mp3",
+        "video/webm",
+        "audio/webm",
+        "video/webm;codecs=vp8",
+        "video/webm;codecs=daala",
+        "video/webm;codecs=h264",
+        "audio/webm;codecs=opus",
+        "video/mpeg",
+    ];
+
+    for (const type of types) {
+        console.log(
+            `Is ${type} supported? ${MediaRecorder.isTypeSupported(type) ? "Maybe!" : "Nope :("
+            }`
+        );
+    }
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then(function (stream) {
             mediaStream = stream;
