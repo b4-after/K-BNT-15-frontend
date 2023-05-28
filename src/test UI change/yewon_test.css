@@ -11,19 +11,21 @@
 .container {
     display: flex;
     justify-content: space-between;
-    //margin-top: -5px;
+    margin-top: -5px;
     padding-left: 10%;
     padding-right: 2%;
-  }
+}
+
 .center {
     width: 100%;
-  }
+}
+
 .right {
     padding-right: 2%;
     padding-left: 35px;
     margin-top: 20%;
     width: 40%;
-  }
+}
 
 
 
@@ -107,9 +109,11 @@
     padding: 10px;
     width: 350px;
     height: 150px;
-    box-sizing: border-box; /* padding 크기 포함 */
+    box-sizing: border-box;
+    /* padding 크기 포함 */
     font-weight: bold;
     color: white;
     background-color: green;
-    border-radius: 30px; /* 모서리 둥글게 */
-  }
+    border-radius: 30px;
+    /* 모서리 둥글게 */
+}
