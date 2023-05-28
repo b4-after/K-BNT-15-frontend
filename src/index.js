@@ -2,12 +2,12 @@
 만55세(1968년생)~만94세(1929년생) 
 만나이이지만 생일 무관 -1살*/
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const birthYearSelect = document.getElementById("birthYear-select");
-  
+
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  
+
   const myL = currentYear - 94;
   const myU = currentYear - 55;
 
@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function() {
     birthYearSelect.add(new Option(option.text, option.value));
   }
 
-    /*버튼 클릭 시*/
-  document.getElementById("start-button").addEventListener("click", function(event) {
+  /*버튼 클릭 시*/
+  document.getElementById("start-button").addEventListener("click", function (event) {
     // 기본 이벤트 제거
     event.preventDefault();
-    
+
     // 선택된 출생연도 가져오기
     const selectedBirthYear = birthYearSelect.options[birthYearSelect.selectedIndex].value;
 
@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 출생연도로 만나이 계산  
-    const selectedAge = currentYear-selectedBirthYear;
-   
+    const selectedAge = currentYear - selectedBirthYear;
+
     window.location.href = "test.html";
     // 서버에 요청하기
-    fetch("http://15.164.169.174:8080/members", {
+    fetch("https://api.bnt-15.kr/members", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

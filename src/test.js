@@ -53,7 +53,7 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
         console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
 
 
-        fetch('http://15.164.169.174:8080/answers', {
+        fetch('https://api.bnt-15.kr/answers', {
             method: "POST",
             body: formData
         })
@@ -119,7 +119,7 @@ function resetTransition() {
 
 function img_update() {
     console.log("question_ID : ", question_ID, "번째. 도메인 API 에서 사진을 받아와 img src 를 변경.");
-    fetch(`http://15.164.169.174:8080/questions/${question_ID}`, {
+    fetch(`https://api.bnt-15.kr/questions/${question_ID}`, {
         method: "GET"
     })
         .then(response => response.json())
