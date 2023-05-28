@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const membersId = locationHeader.split("/").pop();
             localStorage.setItem("members_id", membersId);
             // test 페이지로 전환
-            window.location.href = "https://bnt-15.kr/test";
+            window.location.href = "https://www.bnt-15.kr/test.html";
           } else {
             throw new Error("Location header not found");
           }
@@ -62,6 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       })
       .catch(error => console.error(error));
-    window.location.href = "test.html";
+    window.location.href = "https://www.bnt-15.kr/test.html";
   });
 });
