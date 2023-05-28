@@ -3,7 +3,7 @@ const countdown = document.getElementById('countdown'); // 카운트다운 변�
 let index = 0; // 타이머 쪽 변수
 let intervalId; // 타이머 쪽 변수
 let remainingTime = 15; // 카운트다운 변수
-const image = document.getElementById('image'); // 이미지 dom
+const start = document.getElementById('start'); // start dom
 const prgrs_num_ui = document.getElementById('prgrs_num_ui'); // 진행도 숫자 dom 
 let question_ID = 1;
 
@@ -130,7 +130,7 @@ function img_update() {
 
 function img_hide() {
     console.log("question_ID : ", question_ID, "번째. 사진을 다시 물음표로 변환해 숨긴다.");
-    image.src = "https://cdn-icons-png.flaticon.com/512/2732/2732700.png";
+    image.src = "https://drive.google.com/uc?export=view&id=1KuXVhv_HH9vqAinJ69C4lxEkXv6H8X9p";
 }
 
 function turn_off(id) {

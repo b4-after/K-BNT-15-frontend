@@ -59,12 +59,14 @@
     padding: 10px;
 }
 
-/* Set styles for the image */
-#image {
+/* Set styles for the start */
+#start {
     position: absolute;
     height: 500px;
     width: 500px;
     top: 25%;
+    background-color: green;
+    color: white;
 }
 
 /* Set styles for the buttons */
@@ -86,11 +88,7 @@
     margin-top: 5px;
 }
 
-#start {
-    top: 40%;
-    background-color: green;
-    color: white;
-}
+
 
 #next {
     top: 70%;
