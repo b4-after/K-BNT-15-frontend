@@ -10,6 +10,9 @@ let question_ID = 1;
 let mediaStream;
 let mediaRecorder;
 let chunks = [];
+const options = {
+    mimeType: "audio/wav",
+};
 
 function startRecording() {
     startMediaRecorder();
@@ -17,7 +20,8 @@ function startRecording() {
 
 function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
 
-    mediaRecorder = new MediaRecorder(mediaStream);
+    mediaRecorder = new MediaRecorder(mediaStream, options);
+
     mediaRecorder.start();
     console.log("question_ID : ", question_ID, "번째. 스트림이 초기화 및 재선언.");
     console.log("question_ID : ", question_ID, "번째. MediaRecorder.start() 활성화.");
