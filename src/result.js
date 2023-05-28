@@ -2,7 +2,7 @@
 function getDataFromServer() {
     // 서버 URL을 설정합니다.
     const memberID = localStorage.getItem('members_id');
-    const serverURL = "http://15.164.169.174:8080/results/{memberID}"; // 실제 서버 URL로 변경해주세요.
+    const serverURL = "https://api.bnt-15.kr/{members}"; // 실제 서버 URL로 변경해주세요.
 
     // GET 요청을 보냅니다.
     fetch(serverURL)
