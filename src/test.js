@@ -18,7 +18,7 @@ function startRecording() {
 
 function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
 
-    mediaRecorder = new MediaRecorder(mediaStream, { mimeType: "audio/wav", });
+    mediaRecorder = new MediaRecorder(mediaStream, { mimeType: "audio/webm", });
 
     mediaRecorder.start();
     console.log("question_ID : ", question_ID, "번째. 스트림이 초기화 및 재선언.");
