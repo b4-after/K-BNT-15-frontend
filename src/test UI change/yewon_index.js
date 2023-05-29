@@ -3,6 +3,9 @@
 만나이이지만 생일 무관 -1살*/
 
 document.addEventListener("DOMContentLoaded", function () {
+
+  const audioPlayer = document.getElementById('audioPlayer'); //오디오
+
   const birthYearSelect = document.getElementById("birthYear-select");
 
   const currentDate = new Date();
@@ -64,4 +67,5 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(error => console.error(error));
     window.location.href = "yewon_test.html";
   });
+  audioPlayer.play();
 });

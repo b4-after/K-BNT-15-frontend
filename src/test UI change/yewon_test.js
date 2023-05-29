@@ -13,6 +13,20 @@ let mediaStream;
 let mediaRecorder;
 let chunks = [];
 
+//오디오 재생
+const playButton = document.getElementById('start');
+const audioPlayer = document.getElementById('audioPlayer');
+
+playButton.addEventListener('mouseenter', function() {
+  audioPlayer.play();
+});
+
+playButton.addEventListener('mouseleave', function() {
+  audioPlayer.pause();
+  audioPlayer.currentTime = 0;
+});
+//여기까지 오디오
+
 function startRecording() {
     startMediaRecorder();
 }
@@ -140,6 +154,9 @@ document.getElementById("start").addEventListener('click', () => {
     console.log("===시작 new===", "question_ID : ", question_ID,);
     console.log("");
     console.log("question_ID : ", question_ID, "번째. start 버튼 클릭, 검사 시작.");
+
+    audioPlayer.pause(); //버튼 클릭하면 오디오 중단
+    audioPlayer.currentTime = 0;
 
     startRecording();
     startTransition();
