@@ -177,7 +177,7 @@ document.getElementById("next").addEventListener('click', () => {
 
     question_ID = question_ID + 1;
     if (question_ID > 15) {
-        window.location.href = "result.html";
+        window.location.href = "https://www.bnt-15.kr/result.html";
     }
     resetTransition();
     img_hide();

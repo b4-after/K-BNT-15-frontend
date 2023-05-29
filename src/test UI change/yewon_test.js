@@ -7,6 +7,7 @@ const image = document.getElementById('button-image'); //버튼의 이미지를 
 //const image = document.getElementById('image'); // 이미지 dom
 const prgrs_num_ui = document.getElementById('prgrs_num_ui'); // 진행도 숫자 dom 
 let question_ID = 1;
+let local_mem_Id = JSON.parse(localStorage.getItem("members_id"));
 
 let mediaStream;
 let mediaRecorder;
@@ -41,34 +42,24 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
     turn_off('next');
 
     mediaRecorder.onstop = function () {
-        let blob = new Blob(chunks, { type: 'audio/mpeg' });
+        let blob = new Blob(chunks, { type: 'audio/wav' });
         chunks = [];
 
         let formData = new FormData();
-        let local_mem_Id = JSON.parse(localStorage.getItem("members_id"));
         console.log("question_ID : ", question_ID, "번째. localstorage 에서 getItem 으로 memberID 가져옴");
         formData.append("memberId", local_mem_Id);
         formData.append("questionId", question_ID);
-        formData.append("audio", blob, "audio.mp3");
+        formData.append("audio", blob, "audio.wav");
         console.log("question_ID : ", question_ID, "번째. fetch 할 formdata 와 blob 이 생성된다.");
         console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
 
 
-        fetch('http://15.164.169.174:8080/answers', {
+        fetch('https://api.bnt-15.kr/answers', {
             method: "POST",
             body: formData
         })
         console.log("question_ID : ", question_ID, "번째. 도메인으로 POST 가 진행된다.");
 
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = 'recorded_audio.mp3';
-        a.click();
-        console.log("question_ID : ", question_ID, "번째. 음성 다운로드가 진행된다. ");
-
-        URL.revokeObjectURL(url);
     };
 }
 
@@ -99,9 +90,6 @@ function startTransition() {
             setTimeout(() => { // 얘도 특성 상 위 코드보다 먼저 실행되서 강제 연장
                 document.getElementById("next").click();
             }, 500);
-            setTimeout(() => { // alert 는 무조건 위의 2 문장 보다 먼저 실행되기에, 누구보다 느리게 실행되는 setTimeout 에 가둠
-                alert("아쉽지만 시간이 초과되어, 다음 문제로 이동했어요!");
-            }, 1000);
         }
     }, 1000);
 }
@@ -138,19 +126,13 @@ function img_hide() {
 function turn_off(id) {
     console.log("question_ID : ", question_ID, "번째. ", id, " 버튼을 disabled 시키고 배경색을 바꾼다.");
     document.getElementById(id).disabled = true;
-    /*
-    document.getElementById(id).style.backgroundColor = 'darkslategray';*/
+
 }
 
 function turn_on(id) {
     console.log("question_ID : ", question_ID, "번째. ", id, " 버튼을 활성화시키고 배경색을 원래 가져야 할 색으로.");
     document.getElementById(id).disabled = false;
-    /*
-    if (id == 'start') {
-        document.getElementById(id).style.backgroundColor = 'green';
-    } else if (id == 'next') {
-        document.getElementById(id).style.backgroundColor = 'yellow';
-    }*/
+
 }
 
 document.getElementById("start").addEventListener('click', () => {
