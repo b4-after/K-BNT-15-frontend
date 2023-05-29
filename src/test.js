@@ -17,13 +17,13 @@ let chunks = [];
 const playButton = document.getElementById('start');
 const audioPlayer = document.getElementById('audioPlayer');
 
-playButton.addEventListener('mouseenter', function() {
-  audioPlayer.play();
+playButton.addEventListener('mouseenter', function () {
+    audioPlayer.play();
 });
 
-playButton.addEventListener('mouseleave', function() {
-  audioPlayer.pause();
-  audioPlayer.currentTime = 0;
+playButton.addEventListener('mouseleave', function () {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
 });
 //여기까지 오디오
 
@@ -175,10 +175,11 @@ document.getElementById("next").addEventListener('click', () => {
 
     stopRecording();
 
-    question_ID = question_ID + 1;
+
     if (question_ID > 15) {
         window.location.href = "https://www.bnt-15.kr/result.html";
     }
+    question_ID = question_ID + 1;
     resetTransition();
     img_hide();
     prgrs_num_ui.innerHTML = question_ID;
