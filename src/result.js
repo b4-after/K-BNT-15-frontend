@@ -1,24 +1,13 @@
-let f5 = 0;
 window.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('loading-overlay');
 
-    // 페이지가 로딩되면 로딩 오버레이를 보여줍니다.
     overlay.style.display = 'flex';
 
+    // 데이터 로딩이 완료되면 오버레이를 숨김
+    // 10초 후에 데이터 로딩 완료, 오버레이 숨김
     setTimeout(function() {
-        // 페이지를 새로 고침하기 전에 로딩 오버레이를 숨깁니다.
-        overlay.style.display = 'none';
-    
-        // 페이지가 완전히 로드된 후에 새로 고침을 실행합니다.
-        window.addEventListener('load', function() {
-          if (f5 === 0) {
-            f5 = f5 + 1;
-            location.reload();
-          } else {
-            overlay.style.display = 'none'; // 첫 번째 새로고침 이후에는 로딩 오버레이를 숨깁니다.
-          }
-        });
-      }, 3000);
+      overlay.style.display = 'none';
+    }, 10000);
   });
   
 
