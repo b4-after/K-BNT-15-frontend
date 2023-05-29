@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function() {
     // 10초 후에 데이터 로딩 완료, 오버레이 숨김
     setTimeout(function() {
       overlay.style.display = 'none';
-    }, 10000);
+    }, 2000);
   });
   
 
