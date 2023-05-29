@@ -1,3 +1,17 @@
+window.addEventListener('DOMContentLoaded', function() {
+    var overlay = document.getElementById('loading-overlay');
+  
+    // 데이터를 불러오기 시작할 때 오버레이를 보이도록 설정
+    overlay.style.display = 'flex';
+  
+    // 데이터 로딩이 완료되면 오버레이를 숨김
+    // 아래의 예시는 3초 후에 데이터 로딩이 완료되었다고 가정하고 오버레이를 숨김
+    setTimeout(function() {
+      overlay.style.display = 'none';
+    }, 5000);
+  });
+  
+
 // GET 요청을 보내고 서버에서 응답 데이터를 처리하는 함수
 function getDataFromServer() {
     // 서버 URL을 설정합니다.
