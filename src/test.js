@@ -177,10 +177,13 @@ document.getElementById("next").addEventListener('click', () => {
 
 
     if (question_ID < 15) {
-        question_ID = question_ID + 1;
-        resetTransition();
-        img_hide();
-        prgrs_num_ui.innerHTML = question_ID;
+        setTimeout(() => { // 얘도 특성 상 위 코드보다 먼저 실행되서 강제 연장
+            question_ID = question_ID + 1;
+            resetTransition();
+            img_hide();
+            prgrs_num_ui.innerHTML = question_ID;
+        }, 50);
+
     } else {
         window.location.href = "https://www.bnt-15.kr/result.html";
     }
