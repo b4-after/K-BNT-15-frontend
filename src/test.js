@@ -176,13 +176,14 @@ document.getElementById("next").addEventListener('click', () => {
     stopRecording();
 
 
-    if (question_ID > 15) {
+    if (question_ID < 15) {
+        question_ID = question_ID + 1;
+        resetTransition();
+        img_hide();
+        prgrs_num_ui.innerHTML = question_ID;
+    } else {
         window.location.href = "https://www.bnt-15.kr/result.html";
     }
-    question_ID = question_ID + 1;
-    resetTransition();
-    img_hide();
-    prgrs_num_ui.innerHTML = question_ID;
 
     console.log("");
     console.log("==종료 end==", "question_ID : ", question_ID);
