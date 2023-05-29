@@ -12,8 +12,10 @@ window.addEventListener('DOMContentLoaded', function() {
         // 페이지가 완전히 로드된 후에 새로 고침을 실행합니다.
         window.addEventListener('load', function() {
           if (f5 === 0) {
-            location.reload();
             f5 = f5 + 1;
+            location.reload();
+          } else {
+            overlay.style.display = 'none'; // 첫 번째 새로고침 이후에는 로딩 오버레이를 숨깁니다.
           }
         });
       }, 3000);
