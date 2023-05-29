@@ -3,6 +3,8 @@
 만나이이지만 생일 무관 -1살*/
 
 document.addEventListener("DOMContentLoaded", function () {
+  const audioPlayer = document.getElementById('audioPlayer');
+
   const birthYearSelect = document.getElementById("birthYear-select");
 
   const currentDate = new Date();
@@ -64,4 +66,5 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch(error => console.error(error));
     window.location.href = "https://www.bnt-15.kr/test.html";
   });
+  audioPlayer.play();
 });
