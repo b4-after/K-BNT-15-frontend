@@ -5,10 +5,10 @@ window.addEventListener('DOMContentLoaded', function() {
     overlay.style.display = 'flex';
   
     // 데이터 로딩이 완료되면 오버레이를 숨김
-    // 12초 후에 데이터 로딩 완료, 오버레이 숨김
+    // 15초 후에 데이터 로딩 완료, 오버레이 숨김
     setTimeout(function() {
       overlay.style.display = 'none';
-    }, 12000);
+    }, 15000);
   });
   
 
