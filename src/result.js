@@ -1,14 +1,20 @@
 window.addEventListener('DOMContentLoaded', function() {
-    var overlay = document.getElementById('loading-overlay');
+    const overlay = document.getElementById('loading-overlay');
   
-    // 데이터를 불러오기 시작할 때 오버레이를 보이도록 설정
+    // 페이지가 로딩되면 로딩 오버레이를 보여줍니다.
     overlay.style.display = 'flex';
-  
-    // 데이터 로딩이 완료되면 오버레이를 숨김
-    // 15초 후에 데이터 로딩 완료, 오버레이 숨김
+    
     setTimeout(function() {
+    overlay.style.display = 'none';
+  }, 3000);
+
+    // 페이지를 새로 고침합니다.
+    location.reload();
+
+    // 페이지 로딩이 완료되면 로딩 오버레이를 숨깁니다.
+    window.addEventListener('load', function() {
       overlay.style.display = 'none';
-    }, 15000);
+    });
   });
   
 
