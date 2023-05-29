@@ -100,7 +100,7 @@ th{
 #comparison,
 #totalScore,
 #averageScore {
-  font-size: 35px;
+  font-size: 40px;
   font-weight: bolder;
   color: red;
 }
@@ -119,6 +119,6 @@ th{
 }
 
 #loading-overlay img {
-  width: 90%;
-  height: 90%;
+  width: 800px;
+  height: 500px;
 }
