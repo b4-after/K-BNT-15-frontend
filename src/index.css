@@ -92,5 +92,5 @@ select {
   font-weight: bold;
   color: white;
   background-color: green;
-  border-radius: 10px; /* 모서리 둥글게 */
+  border-radius: 30px; /* 모서리 둥글게 */
 }
