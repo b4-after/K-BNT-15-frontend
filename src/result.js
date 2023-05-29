@@ -15,16 +15,16 @@ function getDataFromServer() {
 
 
             // 결과를 HTML에 표시합니다.
-            document.getElementById("averageScore").textContent = `평균 점수: ${averageScore}`;
+            document.getElementById("averageScore").textContent = `${averageScore}`;
             document.getElementById("totalscore").textContent = `${totalScore}`;
             document.getElementById("totalScore").textContent = totalScore;
 
             // totalScore가 averageScore보다 높은지 낮은지를 표시합니다.
             let comparisonText;
             if (totalScore > averageScore) {
-                comparisonText = ' 평균 점수보다 높습니다.';
+                comparisonText = ' 높습니다.';
             } else if (totalScore < averageScore) {
-                comparisonText = ' 평균 점수보다 낮습니다.';
+                comparisonText = ' 낮습니다.';
             } else {
                 comparisonText = ' 평균 점수입니다.';
             }
