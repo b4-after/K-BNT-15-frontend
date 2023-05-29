@@ -120,15 +120,14 @@ function resetTransition() {
 
 function img_update() {
     console.log("question_ID : ", question_ID, "번째. 도메인 API 에서 사진을 받아와 img src 를 변경.");
-    /*
-    fetch(`http://15.164.169.174:8080/questions/${question_ID}`, {
+
+    fetch(`https://api.bnt-15.kr/questions/${question_ID}`, {
         method: "GET"
     })
         .then(response => response.json())
         .then(data => {
             image.src = data.imageUrl;
-        })*/
-    image.src = "https://cdn.pixabay.com/photo/2019/06/23/21/06/cat-4294780_1280.jpg"; //이미지 제대로 전환되는지 테스트용
+        })
 }
 
 function img_hide() {
@@ -176,10 +175,13 @@ document.getElementById("next").addEventListener('click', () => {
     console.log("question_ID : ", question_ID, "번째. next 버튼이 눌렸다.");
 
     stopRecording();
-    resetTransition();
-    img_hide();
 
     question_ID = question_ID + 1;
+    if (question_ID > 15) {
+        window.location.href = "https://www.bnt-15.kr/result.html";
+    }
+    resetTransition();
+    img_hide();
     prgrs_num_ui.innerHTML = question_ID;
 
     console.log("");
