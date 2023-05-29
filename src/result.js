@@ -1,20 +1,19 @@
 window.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('loading-overlay');
-  
+    const f5 = 0;
+
     // 페이지가 로딩되면 로딩 오버레이를 보여줍니다.
     overlay.style.display = 'flex';
-    
+
     setTimeout(function() {
     overlay.style.display = 'none';
-  }, 3000);
+    }, 3000);
 
     // 페이지를 새로 고침합니다.
-    location.reload();
-
-    // 페이지 로딩이 완료되면 로딩 오버레이를 숨깁니다.
-    window.addEventListener('load', function() {
-      overlay.style.display = 'none';
-    });
+    if (f5==0) {
+        location.reload();
+        f5 = f5+1;
+    }
   });
   
 
