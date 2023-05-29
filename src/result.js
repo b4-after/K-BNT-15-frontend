@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', function() {
     overlay.style.display = 'flex';
   
     // 데이터 로딩이 완료되면 오버레이를 숨김
-    // 아래의 예시는 3초 후에 데이터 로딩이 완료되었다고 가정하고 오버레이를 숨김
+    // 아래의 예시는 5초 후에 데이터 로딩이 완료되었다고 가정하고 오버레이를 숨김
     setTimeout(function() {
       overlay.style.display = 'none';
     }, 5000);

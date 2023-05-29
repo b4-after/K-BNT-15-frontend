@@ -15,7 +15,7 @@
     padding-left: 10%;
     padding-right: 10%;
     margin-top: 15px;
-    margin-bottom: -60px;
+    margin-bottom: -90px;
   }
   .beige-box h3 {
     background-color: rgba(234, 230, 221);
@@ -47,7 +47,7 @@ table{
 }
 
 h2{
-	display: inline-block;
+	display: inline-block;  
 }
 h3{
 	display: inline-block;
@@ -59,7 +59,25 @@ h4{
 	display: inline-block;
 	text-align : center;
 	margin-left: 25px;
-	font-size : 20px;
+}
+
+.result h1 {
+  font-size : 35px;
+  font-weight: bold;
+}
+.result h3{
+  font-size : 25px;
+  font-weight: bold;
+}
+.result h2{
+  font-size : 30px;
+  font-weight: bold;
+  margin-bottom: -30px;
+}
+.result p{
+  font-size : 30px;
+  font-weight: bold;
+
 }
 .highlight {
 	color: red;
@@ -82,6 +100,8 @@ th{
 #comparison,
 #totalScore,
 #averageScore {
+  font-size: 35px;
+  font-weight: bolder;
   color: red;
 }
 
@@ -99,6 +119,6 @@ th{
 }
 
 #loading-overlay img {
-  width: 850px;
-  height: 800px;
+  width: 90%
+  height: 90%;
 }
