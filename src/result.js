@@ -25,12 +25,12 @@ function updateTableTwo(results) {
     const overlay = document.getElementById('loading-overlay');
     overlay.style.display = 'flex';
       
-    getDataFromServer();  
+
     // 데이터 로딩이 완료되면 오버레이를 숨김
     // 5초 후에 데이터 로딩 완료, 오버레이 숨김
     setTimeout(function() {
       overlay.style.display = 'none';
-    }, 30000);
+    }, 5000);
       
     // 로컬 스토리지에 저장된 데이터가 있는지 확인합니다.
     const storedData = localStorage.getItem('resultData');
