@@ -30,7 +30,7 @@ function updateTableTwo(results) {
     // 5초 후에 데이터 로딩 완료, 오버레이 숨김
     setTimeout(function() {
       overlay.style.display = 'none';
-    }, 15000);
+    }, 30000);
       
     // 로컬 스토리지에 저장된 데이터가 있는지 확인합니다.
     const storedData = localStorage.getItem('resultData');
