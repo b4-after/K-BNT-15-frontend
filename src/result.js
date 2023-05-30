@@ -80,12 +80,12 @@ function updateTableTwo(results) {
     updateTableTwo(results);
   }
 
-window.addEventListener('beforeunload', function(event) {
-  // 이벤트가 발생한 이유가 페이지 새로고침일 때
-  if (event.currentTarget.performance.navigation.type === 1) {
-    // 로컬 스토리지 유지
+window.addEventListener('unload', function(event) {
+  // Check if the page is being refreshed
+  if (event.persisted) {
+    // Keep the localStorage
   } else {
-    // 페이지를 나가면 로컬 스토리지 클리어
+    // Clear the localStorage when leaving the page
     localStorage.clear();
   }
 });
