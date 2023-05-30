@@ -67,6 +67,16 @@ function updateTableTwo(results) {
     updateTableOne(results);
     updateTableTwo(results);
   }
+
+window.addEventListener('beforeunload', function(event) {
+  // 이벤트가 발생한 이유가 페이지 새로고침일 때
+  if (event.currentTarget.performance.navigation.type === 1) {
+    // 로컬 스토리지 유지
+  } else {
+    // 페이지를 나가면 로컬 스토리지 클리어
+    localStorage.clear();
+  }
+});
   
   function displayScores(averageScore, totalScore) {
     document.getElementById("averageScore").textContent = averageScore;
@@ -85,6 +95,8 @@ function updateTableTwo(results) {
     }
     document.getElementById('comparison').textContent = comparisonText;
   }
+
+
   
   function updateTableOne(results) {
     const tableOneRows = document.querySelectorAll("#resultTableOne tr");
