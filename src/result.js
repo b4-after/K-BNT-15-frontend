@@ -80,10 +80,10 @@ function updateTableTwo(results) {
     updateTableTwo(results);
   }
 
-window.addEventListener('unload', function(event) {
-  // Check if the page is being refreshed
-  if (event.persisted) {
-    // Keep the localStorage
+window.addEventListener('beforeunload', function(event) {
+  // Check if the event is caused by a page refresh
+  if (event.currentTarget.performance.navigation.type === 1) {
+    // Keep the localStorage when refreshing the page
   } else {
     // Clear the localStorage when leaving the page
     localStorage.clear();
