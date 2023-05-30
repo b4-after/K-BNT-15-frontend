@@ -31,6 +31,18 @@ function updateTableTwo(results) {
     setTimeout(function() {
       overlay.style.display = 'none';
     }, 10000);
+      
+    // 로컬 스토리지에 저장된 데이터가 있는지 확인합니다.
+    const storedData = localStorage.getItem('resultData');
+  
+    // 저장된 데이터가 있으면 해당 데이터를 사용하여 표시합니다.
+    if (storedData) {
+      const data = JSON.parse(storedData);
+      handleResponseData(data);
+    } else {
+      // 저장된 데이터가 없으면 서버에서 데이터를 가져옵니다.
+      getDataFromServer();
+  }
 
   });
   
