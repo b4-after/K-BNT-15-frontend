@@ -24,13 +24,14 @@ function updateTableTwo(results) {
   window.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('loading-overlay');
     overlay.style.display = 'flex';
-  
+      
+    getDataFromServer();  
     // 데이터 로딩이 완료되면 오버레이를 숨김
     // 5초 후에 데이터 로딩 완료, 오버레이 숨김
     setTimeout(function() {
       overlay.style.display = 'none';
     }, 10000);
-    getDataFromServer();
+
   });
   
   // GET 요청을 보내고 서버에서 응답 데이터를 처리하는 함수
