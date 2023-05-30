@@ -30,20 +30,19 @@ function updateTableTwo(results) {
     // 5초 후에 데이터 로딩 완료, 오버레이 숨김
     setTimeout(function() {
       overlay.style.display = 'none';
-    }, 5000);
       
-    // 로컬 스토리지에 저장된 데이터가 있는지 확인합니다.
-    const storedData = localStorage.getItem('resultData');
+     // 로컬 스토리지에 저장된 데이터가 있는지 확인합니다.
+     const storedData = localStorage.getItem('resultData');
   
-    // 저장된 데이터가 있으면 해당 데이터를 사용하여 표시합니다.
-    if (storedData) {
-      const data = JSON.parse(storedData);
-      handleResponseData(data);
-    } else {
-      // 저장된 데이터가 없으면 서버에서 데이터를 가져옵니다.
-      getDataFromServer();
-  }
-
+     // 저장된 데이터가 있으면 해당 데이터를 사용하여 표시합니다.
+     if (storedData) {
+       const data = JSON.parse(storedData);
+       handleResponseData(data);
+     } else {
+       // 저장된 데이터가 없으면 서버에서 데이터를 가져옵니다.
+       getDataFromServer();
+     }
+    },5000);   
   });
   
   // GET 요청을 보내고 서버에서 응답 데이터를 처리하는 함수
