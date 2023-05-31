@@ -80,7 +80,7 @@ function updateTableTwo(results) {
     updateTableTwo(results);
   }
 
-window.addEventListener('unload', function() {
+window.addEventListener('beforeunload', function() {
     localStorage.clear();
 });
   
