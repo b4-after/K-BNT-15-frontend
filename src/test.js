@@ -100,17 +100,7 @@ function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!
         };
 
         console.log("question_ID : ", question_ID, "reader.readAsArrayBuffer(e.data); 실행, 파형 그래프 표시");
-        document.getElementById('waveform').addEventListener('click', () => {
-            document.getElementById("waveform").style.removeProperty('innerHTML');
-            document.getElementById("waveform").style.removeProperty('backgroundColor');
-            document.getElementById("waveform").style.removeProperty('color');
-            reader.readAsArrayBuffer(e.data);
-            setTimeout(() => { // 얘도 특성 상 위 코드보다 먼저 실행되서 강제 연장
-                document.getElementById("waveform").style.innerHTML = '이전 문제<br>음성 확인';
-                document.getElementById("waveform").style.backgroundColor = white;
-                document.getElementById("waveform").style.color = green;
-            }, 100);
-        })
+        reader.readAsArrayBuffer(e.data);
 
     };
 
