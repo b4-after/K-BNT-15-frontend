@@ -42,6 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 7000); // 7초 후에 오디오 작업 중단
         }
     }
+   function handleError(error) {
+      console.error('마이크 액세스 오류:', error);
+    }
+  });
 
   /*버튼 클릭 시*/
   document.getElementById("start-button").addEventListener("click", function (event) {
