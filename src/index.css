@@ -94,3 +94,17 @@ select {
   background-color: green;
   border-radius: 30px; /* 모서리 둥글게 */
 }
+
+/*마이크 테스트 버튼*/
+#audio-button {
+  font-size: 30px;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px;
+  height: 70px;
+  box-sizing: border-box; /* padding 크기 포함 */
+  font-weight: bold;
+  color: black;
+  background-color: yellow;
+  border-radius: 80px; /* 모서리 둥글게 */
+}
