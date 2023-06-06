@@ -115,6 +115,9 @@
 }
 
 #waveform {
+    font-weight: bold;
+    color: green;
+    background-color: white;
     display: inline-block;
     width: 350px;
     height: 150px;
