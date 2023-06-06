@@ -99,6 +99,7 @@ function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!
             });
         };
 
+        console.log("question_ID : ", question_ID, "reader.readAsArrayBuffer(e.data); 실행, 파형 그래프 표시");
         reader.readAsArrayBuffer(e.data);
     };
 

@@ -23,7 +23,7 @@
 .right {
     padding-right: 2%;
     padding-left: 35px;
-    margin-top: 10%;
+    margin-top: 8%;
     width: 40%;
 }
 
@@ -124,6 +124,7 @@
     width: 350px;
     height: 150px;
     box-sizing: border-box;
+    border: 1px green solid;
     /* padding 크기 포함 */
     border-radius: 30px;
     /* 모서리 둥글게 */
