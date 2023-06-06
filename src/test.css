@@ -26,7 +26,8 @@
     margin-top: 10%;
     width: 40%;
 }
-.right p{
+
+.right p {
     display: flex;
     font-size: 40px;
     font-weight: bold;
@@ -114,6 +115,16 @@
     font-weight: bold;
     color: white;
     background-color: green;
+    border-radius: 30px;
+    /* 모서리 둥글게 */
+}
+
+#waveform {
+    display: inline-block;
+    width: 350px;
+    height: 150px;
+    box-sizing: border-box;
+    /* padding 크기 포함 */
     border-radius: 30px;
     /* 모서리 둥글게 */
 }

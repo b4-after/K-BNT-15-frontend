@@ -13,6 +13,11 @@ let mediaStream;
 let mediaRecorder;
 let chunks = [];
 
+// 파형 표현
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const canvas = document.getElementById('waveform');
+const canvasContext = canvas.getContext('2d');
+
 //오디오 재생
 const audioPlayer = document.getElementById('audioPlayer');
 
@@ -21,9 +26,30 @@ document.getElementById("start").addEventListener('mouseenter', function () {
         audioPlayer.play();
     }
 });
-
-
 //여기까지 오디오
+
+function drawWaveform(dataArray) {
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+    canvasContext.beginPath();
+    const sliceWidth = canvas.width * 1.0 / dataArray.length;
+    let x = 0;
+
+    for (let i = 0; i < dataArray.length; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = v * canvas.height / 2;
+
+        if (i === 0) {
+            canvasContext.moveTo(x, y);
+        } else {
+            canvasContext.lineTo(x, y);
+        }
+
+        x += sliceWidth;
+    }
+
+    canvasContext.lineTo(canvas.width, canvas.height / 2);
+    canvasContext.stroke();
+}
 
 function startRecording() {
     startMediaRecorder();
@@ -42,6 +68,38 @@ function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!
     mediaRecorder.ondataavailable = function (e) {
         chunks.push(e.data);
         console.log("question_ID : ", question_ID, "번째. MediaRecorder.ondataavailable 에 의해 chunks 가 e.data 를 push");
+
+        // 파형 표시
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const arrayBuffer = reader.result;
+
+            audioContext.decodeAudioData(arrayBuffer, buffer => {
+                const audioBufferSource = audioContext.createBufferSource();
+                audioBufferSource.buffer = buffer;
+
+                const analyser = audioContext.createAnalyser();
+                analyser.fftSize = 2048;
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+
+                audioBufferSource.connect(analyser);
+                analyser.connect(audioContext.destination);
+
+                audioBufferSource.start();
+
+                const draw = () => {
+                    requestAnimationFrame(draw);
+                    analyser.getByteTimeDomainData(dataArray);
+                    drawWaveform(dataArray);
+                };
+
+                draw();
+            });
+        };
+
+        reader.readAsArrayBuffer(e.data);
     };
 
 }
