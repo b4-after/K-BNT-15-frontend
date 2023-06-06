@@ -14,17 +14,15 @@ let mediaRecorder;
 let chunks = [];
 
 //오디오 재생
-const playButton = document.getElementById('start');
 const audioPlayer = document.getElementById('audioPlayer');
 
-playButton.addEventListener('mouseenter', function () {
-    audioPlayer.play();
+document.getElementById("start").addEventListener('mouseenter', function () {
+    if (question_ID == 1) {
+        audioPlayer.play();
+    }
 });
 
-playButton.addEventListener('mouseleave', function () {
-    audioPlayer.pause();
-    audioPlayer.currentTime = 0;
-});
+
 //여기까지 오디오
 
 function startRecording() {
