@@ -19,29 +19,30 @@ document.addEventListener("DOMContentLoaded", function () {
     option.text = i;
     birthYearSelect.add(new Option(option.text, option.value));
   }
-  
+
   /*마이크 테스트*/
   document.getElementById("audio-button").addEventListener("click", function (event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  const audioContext = new AudioContext();
-  let isAudioEnabled = true;
+    const audioContext = new AudioContext();
+    let isAudioEnabled = true;
 
-  navigator.mediaDevices.getUserMedia({ audio: true })
+    navigator.mediaDevices.getUserMedia({ audio: true })
       .then(handleSuccess)
       .catch(handleError);
 
-  function handleSuccess(stream) {
+    function handleSuccess(stream) {
       if (isAudioEnabled) {
-          const source = audioContext.createMediaStreamSource(stream);
-          source.connect(audioContext.destination);
+        const source = audioContext.createMediaStreamSource(stream);
+        source.connect(audioContext.destination);
 
-          setTimeout(function () {
-              source.disconnect();
-              isAudioEnabled = false;
-          }, 7000); // 7초 후에 오디오 작업 중단
+        setTimeout(function () {
+          source.disconnect();
+          isAudioEnabled = false;
+        }, 7000); // 7초 후에 오디오 작업 중단
       }
-  }
+    }
+  });
 
   /*버튼 클릭 시*/
   document.getElementById("start-button").addEventListener("click", function (event) {
