@@ -23,7 +23,7 @@
 .right {
     padding-right: 2%;
     padding-left: 35px;
-    margin-top: 7%;
+    margin-top: 5%;
     width: 40%;
 }
 
@@ -99,11 +99,6 @@
     transition: background-color 1s linear;
 }
 
-
-
-
-
-
 .right .next-button {
     font-size: 47px;
     display: inline-block;
@@ -121,9 +116,9 @@
 
 #waveform {
     display: inline-block;
-    width: 350px;
+    width: 330px;
     height: 150px;
-    margin: 1% 0 0 0;
+    margin: 40px 0 0 0;
     box-sizing: border-box;
     border: 1px green solid;
     /* padding 크기 포함 */
