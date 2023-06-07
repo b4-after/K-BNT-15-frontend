@@ -13,10 +13,17 @@ let mediaStream;
 let mediaRecorder;
 let chunks = [];
 
-// 파형 표현
+// 오디오 컨텍스트 생성
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+// 오디오 입력을 받을 노드 생성
+const inputNode = audioContext.createGain();
+// 오디오 데이터 시각화를 위한 캔버스 설정
 const canvas = document.getElementById('waveform');
 const canvasContext = canvas.getContext('2d');
+const width = canvas.width;
+const height = canvas.height;
+const dataArray = new Uint8Array(width);
+
 
 //오디오 재생
 const audioPlayer = document.getElementById('audioPlayer');
@@ -28,15 +35,28 @@ document.getElementById("start").addEventListener('mouseenter', function () {
 });
 //여기까지 오디오
 
-function drawWaveform(dataArray) {
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+function drawWaveform() {
+    canvasContext.clearRect(0, 0, width, height);
+    canvasContext.fillStyle = '#ffffff';
+    canvasContext.fillRect(0, 0, width, height);
+
+
+    const draw = requestAnimationFrame(drawWaveform);
+
+    // 파형 데이터 가져오기
+    analyser.getByteTimeDomainData(dataArray);
+
+    // 파형 그리기
+    canvasContext.lineWidth = 2;
+    canvasContext.strokeStyle = '#000000';
     canvasContext.beginPath();
-    const sliceWidth = canvas.width * 1.0 / dataArray.length;
+
+    const sliceWidth = width / dataArray.length;
     let x = 0;
 
     for (let i = 0; i < dataArray.length; i++) {
         const v = dataArray[i] / 128.0;
-        const y = v * canvas.height / 2;
+        const y = (v * height) / 2;
 
         if (i === 0) {
             canvasContext.moveTo(x, y);
@@ -49,6 +69,12 @@ function drawWaveform(dataArray) {
 
     canvasContext.lineTo(canvas.width, canvas.height / 2);
     canvasContext.stroke();
+
+    if (audioContext.state === 'suspended') {
+        audioContext.resume();
+    }
+
+    canvasContext.closePath();
 }
 
 function startRecording() {
@@ -135,16 +161,6 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
     };
 }
 
-// Ask for microphone permission when the page loads
-document.addEventListener('DOMContentLoaded', function () {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(function (stream) {
-            mediaStream = stream;
-        })
-        .catch(function (err) {
-            console.error('Error accessing microphone', err);
-        });
-});
 // 시간 막대, id=bar 의 class=time_blck 들의 transition 시작. 페이지 로드 시 자동 시작.
 function startTransition() {
     console.log("question_ID : ", question_ID, "번째. 타이머와 진행도 intervalId 변동에 따라 변화 시작.");
@@ -206,6 +222,25 @@ function turn_on(id) {
     document.getElementById(id).disabled = false;
 
 }
+
+// Ask for microphone permission when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function (stream) {
+            const microphone = audioContext.createMediaStreamSource(stream);
+            microphone.connect(inputNode);
+            mediaStream = stream;
+        })
+        .catch(function (err) {
+            console.error('Error accessing microphone', err);
+        });
+});
+
+const analyser = audioContext.createAnalyser();
+analyser.fftSize = 2048;
+inputNode.connect(analyser);
+
+drawWaveform();
 
 document.getElementById("start").addEventListener('click', () => {
     console.log("");
