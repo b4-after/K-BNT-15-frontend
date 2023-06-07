@@ -37,7 +37,6 @@ function drawWaveform() {
     canvasContext.fillStyle = '#ffffff';
     canvasContext.fillRect(0, 0, width, height);
 
-
     const draw = requestAnimationFrame(drawWaveform);
 
     // 파형 데이터 가져오기
@@ -74,10 +73,6 @@ function drawWaveform() {
     canvasContext.closePath();
 }
 
-function startRecording() {
-    startMediaRecorder();
-}
-
 function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
 
     mediaRecorder = new MediaRecorder(mediaStream);
@@ -91,42 +86,7 @@ function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!
     mediaRecorder.ondataavailable = function (e) {
         chunks.push(e.data);
         console.log("question_ID : ", question_ID, "번째. MediaRecorder.ondataavailable 에 의해 chunks 가 e.data 를 push");
-
-        // 파형 표시
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            const arrayBuffer = reader.result;
-
-            audioContext.decodeAudioData(arrayBuffer, buffer => {
-                const audioBufferSource = audioContext.createBufferSource();
-                audioBufferSource.buffer = buffer;
-
-                const analyser = audioContext.createAnalyser();
-                analyser.fftSize = 2048;
-                const bufferLength = analyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
-
-                audioBufferSource.connect(analyser);
-                analyser.connect(audioContext.destination);
-
-                audioBufferSource.start();
-
-                const draw = () => {
-                    requestAnimationFrame(draw);
-                    analyser.getByteTimeDomainData(dataArray);
-                    drawWaveform(dataArray);
-                };
-
-                draw();
-            });
-        };
-
-        console.log("question_ID : ", question_ID, "reader.readAsArrayBuffer(e.data); 실행, 파형 그래프 표시");
-        reader.readAsArrayBuffer(e.data);
-
     };
-
 }
 
 function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
@@ -249,7 +209,7 @@ document.getElementById("start").addEventListener('click', () => {
     audioPlayer.pause(); //버튼 클릭하면 오디오 중단
     audioPlayer.currentTime = 0;
 
-    startRecording();
+    startMediaRecorder();
     startTransition();
     img_update();
 
