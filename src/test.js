@@ -4,7 +4,6 @@ let index = 0; // 타이머 쪽 변수
 let intervalId; // 타이머 쪽 변수
 let remainingTime = 15; // 카운트다운 변수
 const image = document.getElementById('button-image'); //버튼의 이미지를 바꿔서 보여줍니다.
-//const image = document.getElementById('image'); // 이미지 dom
 const prgrs_num_ui = document.getElementById('prgrs_num_ui'); // 진행도 숫자 dom 
 let question_ID = 1;
 let local_mem_Id = JSON.parse(localStorage.getItem("members_id"));
@@ -17,13 +16,11 @@ let chunks = [];
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 // 오디오 입력을 받을 노드 생성
 const inputNode = audioContext.createGain();
-// 오디오 데이터 시각화를 위한 캔버스 설정
 const canvas = document.getElementById('waveform');
 const canvasContext = canvas.getContext('2d');
 const width = canvas.width;
 const height = canvas.height;
 const dataArray = new Uint8Array(width);
-
 
 //오디오 재생
 const audioPlayer = document.getElementById('audioPlayer');
@@ -223,24 +220,25 @@ function turn_on(id) {
 
 }
 
-// Ask for microphone permission when the page loads
-document.addEventListener('DOMContentLoaded', function () {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(function (stream) {
-            const microphone = audioContext.createMediaStreamSource(stream);
-            microphone.connect(inputNode);
-            mediaStream = stream;
-        })
-        .catch(function (err) {
-            console.error('Error accessing microphone', err);
-        });
-});
-
+// 오디오 분석을 위한 AnalyserNode 생성
 const analyser = audioContext.createAnalyser();
 analyser.fftSize = 2048;
 inputNode.connect(analyser);
 
 drawWaveform();
+
+// Ask for microphone permission when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function (stream) {
+            mediaStream = stream;
+            const microphone = audioContext.createMediaStreamSource(stream);
+            microphone.connect(inputNode);
+        })
+        .catch(function (err) {
+            console.error('Error accessing microphone', err);
+        });
+});
 
 document.getElementById("start").addEventListener('click', () => {
     console.log("");
@@ -267,7 +265,6 @@ document.getElementById("next").addEventListener('click', () => {
     console.log("question_ID : ", question_ID, "번째. next 버튼이 눌렸다.");
 
     stopRecording();
-
 
     if (question_ID < 15) {
         setTimeout(() => { // 얘도 특성 상 위 코드보다 먼저 실행되서 강제 연장
