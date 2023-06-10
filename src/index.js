@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } catch (error) {
         console.error("Error saving member ID to local storage:", error);
         // Retry after an exponentially increasing delay
-        setTimeout(() => retrySaveMemberId(delay * 2), delay);
+        setTimeout(() => retrySaveMemberId(locationHeader, delay * 2), delay);
       }
     };
 
@@ -102,4 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "https://www.bnt-15.kr/test.html";
   });
   audioPlayer.play();
+  
+  // Check if member ID is saved in local storage
+  const membersId = localStorage.getItem("members_id");
+  if (membersId) {
+    // Redirect to the test page if member ID is already saved
+    window.location.href = "https://www.bnt-15.kr/test.html";
+  }
+  
 });
