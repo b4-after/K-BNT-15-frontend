@@ -88,8 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
           const locationHeader = response.headers.get("Location");
           console.log(locationHeader);
           if (locationHeader) {
-            retrySaveMemberId(locationHeader, 1000); // Start with a 1-second delay
-            // Switch to the test page after the member ID is successfully saved in local storage
+            // Save the member ID to local storage
+            localStorage.setItem("members_id", locationHeader.split("/").pop());
+            // Switch to the test page
             window.location.href = "https://www.bnt-15.kr/test.html";
           } else {
             throw new Error("Location header not found");
@@ -99,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       })
       .catch(error => console.error(error));
-    window.location.href = "https://www.bnt-15.kr/test.html";
   });
   audioPlayer.play();
   
