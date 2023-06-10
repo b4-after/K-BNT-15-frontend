@@ -60,6 +60,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // 출생연도로 만나이 계산  
     const selectedAge = currentYear - selectedBirthYear;
 
+    const retrySaveMemberId = (delay) => {
+      try {
+        const membersId = locationHeader.split("/").pop();
+        localStorage.setItem("members_id", membersId);
+        // switch to test page
+        window.location.href = "https://www.bnt-15.kr/test.html";
+      } catch (error) {
+        console.error("Error saving member ID to local storage:", error);
+        // Retry after an exponentially increasing delay
+        setTimeout(() => retrySaveMemberId(delay * 2), delay);
+      }
+    };
 
     // 서버에 요청하기
     fetch("https://api.bnt-15.kr/members", {
@@ -76,10 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const locationHeader = response.headers.get("Location");
           console.log(locationHeader);
           if (locationHeader) {
-            const membersId = locationHeader.split("/").pop();
-            localStorage.setItem("members_id", membersId);
-            // test 페이지로 전환
-            window.location.href = "https://www.bnt-15.kr/test.html";
+            retrySaveMemberId(1000); // Start with a 1-second delay
           } else {
             throw new Error("Location header not found");
           }
