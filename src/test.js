@@ -93,12 +93,12 @@ function stopRecording() {
     mediaRecorder.stop();
     console.log("question_ID : ", question_ID, "번째. MediaRecorder.stop() 발생");
 
+    turn_on('start');
+    turn_off('next');
+    
     mediaRecorder.onstop = function () {
         let blob = new Blob(chunks, { type: 'audio/wav' });
         chunks = [];
-
-        turn_on('start');
-        turn_off('next');
 
         let formData = new FormData();
         console.log("question_ID : ", question_ID, "번째. localstorage 에서 getItem 으로 memberID 가져옴");
