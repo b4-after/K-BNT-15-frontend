@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const membersId = locationHeader.split("/").pop();
         localStorage.setItem("members_id", membersId);
         // switch to test page
-        window.location.href = "https://www.bnt-15.kr/test.html";
+        //window.location.href = "https://www.bnt-15.kr/test.html";
       } catch (error) {
         console.error("Error saving member ID to local storage:", error);
         // Retry after an exponentially increasing delay
@@ -89,6 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log(locationHeader);
           if (locationHeader) {
             retrySaveMemberId(locationHeader, 1000); // Start with a 1-second delay
+            // Switch to the test page after the member ID is successfully saved in local storage
+            window.location.href = "https://www.bnt-15.kr/test.html";
           } else {
             throw new Error("Location header not found");
           }
