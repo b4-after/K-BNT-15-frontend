@@ -89,14 +89,13 @@ function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!
     };
 }
 
-function stopRecording() {
-    mediaRecorder.stop();
+async function stopRecording() {
     console.log("question_ID : ", question_ID, "번째. MediaRecorder.stop() 발생");
 
     turn_on('start');
     turn_off('next');
     
-    mediaRecorder.onstop = function () {
+    mediaRecorder.onstop = async function () {
         let blob = new Blob(chunks, { type: 'audio/wav' });
         chunks = [];
 
@@ -108,7 +107,7 @@ function stopRecording() {
         console.log("question_ID : ", question_ID, "번째. fetch 할 formdata 와 blob 이 생성된다.");
         console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
 
-        fetch('https://api.bnt-15.kr/answers', {
+        await fetch('https://api.bnt-15.kr/answers', {
             method: "POST",
             body: formData
         }).then(function () {
@@ -120,8 +119,12 @@ function stopRecording() {
             } else {
                 window.location.href = "https://www.bnt-15.kr/result.html";
             }
+
+            mediaRecorder.onstop = null;
         });
     };
+
+    mediaRecorder.stop();
 }
 
 // 시간 막대, id=bar 의 class=time_blck 들의 transition 시작. 페이지 로드 시 자동 시작.
