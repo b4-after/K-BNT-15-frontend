@@ -89,12 +89,9 @@ function startMediaRecorder() { // 이 안에 버튼 활성&비활성 있음 !!!
     };
 }
 
-function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
+function stopRecording() {
     mediaRecorder.stop();
     console.log("question_ID : ", question_ID, "번째. MediaRecorder.stop() 발생");
-
-    turn_on('start');
-    turn_off('next');
 
     mediaRecorder.onstop = function () {
         let blob = new Blob(chunks, { type: 'audio/wav' });
@@ -108,13 +105,19 @@ function stopRecording() { // 이 안에 버튼 활성&비활성 있음 !!!!!!!!
         console.log("question_ID : ", question_ID, "번째. fetch 할 formdata 와 blob 이 생성된다.");
         console.log("question_ID : ", question_ID, "번째. memberID: ", local_mem_Id);
 
-
         fetch('https://api.bnt-15.kr/answers', {
             method: "POST",
             body: formData
-        })
-        console.log("question_ID : ", question_ID, "번째. 도메인으로 POST 가 진행된다.");
-
+        }).then(function () {
+            if (question_ID < 15) {
+                question_ID = question_ID + 1;
+                resetTransition();
+                img_hide();
+                prgrs_num_ui.innerHTML = question_ID;
+            } else {
+                window.location.href = "https://www.bnt-15.kr/result.html";
+            }
+        });
     };
 }
 
@@ -225,18 +228,6 @@ document.getElementById("next").addEventListener('click', () => {
     console.log("question_ID : ", question_ID, "번째. next 버튼이 눌렸다.");
 
     stopRecording();
-
-    if (question_ID < 15) {
-        setTimeout(() => { // 얘도 특성 상 위 코드보다 먼저 실행되서 강제 연장
-            question_ID = question_ID + 1;
-            resetTransition();
-            img_hide();
-            prgrs_num_ui.innerHTML = question_ID;
-        }, 50);
-
-    } else {
-        window.location.href = "https://www.bnt-15.kr/result.html";
-    }
 
     console.log("");
     console.log("==종료 end==", "question_ID : ", question_ID);
