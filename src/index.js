@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 출생연도로 만나이 계산  
     const selectedAge = currentYear - selectedBirthYear;
 
-    const retrySaveMemberId = (delay) => {
+    const retrySaveMemberId = (locationHeader, delay) => {
       try {
         const membersId = locationHeader.split("/").pop();
         localStorage.setItem("members_id", membersId);
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const locationHeader = response.headers.get("Location");
           console.log(locationHeader);
           if (locationHeader) {
-            retrySaveMemberId(1000); // Start with a 1-second delay
+            retrySaveMemberId(locationHeader, 1000); // Start with a 1-second delay
           } else {
             throw new Error("Location header not found");
           }
