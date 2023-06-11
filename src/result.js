@@ -49,7 +49,7 @@ function updateTableTwo(results) {
   function getDataFromServer() {
     const memberID = 366;
     //const memberID = localStorage.getItem('members_id');
-    //const serverURL = `https://api.bnt-15.kr/results/${memberID}`;
+    const serverURL = `https://api.bnt-15.kr/results/${memberID}`;
   
     // GET 요청을 보냅니다.
     return fetch(serverURL)
